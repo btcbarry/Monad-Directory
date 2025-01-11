@@ -1,0 +1,59 @@
+[
+  {
+    "title": "MonadLogos",
+    "description": "Mint colorful Monad Logos on devnet.",
+    "website": "https://monadlogos.vercel.app/",
+    "socials": null,
+    "notes": "",
+    "contact": "SudoBug",
+    "relatedContractAddresses": ["0xf1AC21c315E0345C04365B2D68a906cb2c3Cf8c6"]
+  },
+  {
+    "title": "BreakMonad",
+    "description": "Click to send transactions. Mint an NFT representative of you trying to break devnet.",
+    "website": "https://www.breakmonad.com/",
+    "socials": null,
+    "notes": "NFT mint feature is being debugged.",
+    "contact": ["saviour1001 (DC)", "vrajdesai (DC)"],
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Nad Name Service",
+    "description": "Nad Name Service, SDK docs",
+    "website": "https://devnet.nad.domains",
+    "socials": null,
+    "notes": "Don't share publicly (outside of the devnet chat) as this person doesn't want a crazy AWS bill",
+    "contact": ["joengo_6996 (DC)"],
+    "relatedContractAddresses": ["0x3019BF1dfB84E5b46Ca9D0eEC37dE08a59A41308"]
+  },
+  {
+    "title": "Early Nads NFT Mint",
+    "description": "NFT Mint",
+    "website": "https://early-nads-nft.vercel.app/",
+    "socials": null,
+    "notes": "",
+    "contact": ["husseinrasti"],
+    "relatedContractAddresses": ["0x7F4A595f91aA271a46bfe6F8D63ae2B14514d1C0"]
+  },
+  {
+    "title": "Token Locker",
+    "description": "",
+    "website": "https://monad-devnet-woad.vercel.app/",
+    "socials": null,
+    "notes": "",
+    "contact": ["oxshah"],
+    "relatedContractAddresses": ["0x9959312AD0f30315b0946FC05b383118aC81aC56"]
+  },
+  {
+    "title": "Transaction Spammers",
+    "description": "",
+    "website": "https://discord.com/channels/1263596865233096714/1324458370094202960/1324872434117115985",
+    "socials": null,
+    "notes": "",
+    "contact": ["Fearel_"],
+    "relatedContractAddresses": []
+  },
+  {
+    ...
+  }
+]
