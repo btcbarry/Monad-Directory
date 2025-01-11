@@ -1,59 +1,294 @@
 [
   {
     "title": "MonadLogos",
-    "description": "Mint colorful Monad Logos on devnet.",
+    "isOnDevnet": true,
     "website": "https://monadlogos.vercel.app/",
-    "socials": null,
+    "description": "Mint colorful Monad Logos on devnet.",
     "notes": "",
     "contact": "SudoBug",
     "relatedContractAddresses": ["0xf1AC21c315E0345C04365B2D68a906cb2c3Cf8c6"]
   },
   {
     "title": "BreakMonad",
-    "description": "Click to send transactions. Mint an NFT representative of you trying to break devnet.",
+    "isOnDevnet": false,
     "website": "https://www.breakmonad.com/",
-    "socials": null,
+    "description": "Click to send transactions. Mint an NFT representative of you trying to break devnet.",
     "notes": "NFT mint feature is being debugged.",
     "contact": ["saviour1001 (DC)", "vrajdesai (DC)"],
     "relatedContractAddresses": []
   },
   {
     "title": "Nad Name Service",
-    "description": "Nad Name Service, SDK docs",
+    "isOnDevnet": true,
     "website": "https://devnet.nad.domains",
-    "socials": null,
+    "description": "Nad Name Service, SDK docs",
     "notes": "Don't share publicly (outside of the devnet chat) as this person doesn't want a crazy AWS bill",
-    "contact": ["joengo_6996 (DC)"],
+    "contact": "joengo_6996 (DC)",
     "relatedContractAddresses": ["0x3019BF1dfB84E5b46Ca9D0eEC37dE08a59A41308"]
   },
   {
     "title": "Early Nads NFT Mint",
-    "description": "NFT Mint",
+    "isOnDevnet": true,
     "website": "https://early-nads-nft.vercel.app/",
-    "socials": null,
+    "description": "NFT Mint",
     "notes": "",
-    "contact": ["husseinrasti"],
+    "contact": "husseinrasti",
     "relatedContractAddresses": ["0x7F4A595f91aA271a46bfe6F8D63ae2B14514d1C0"]
   },
   {
     "title": "Token Locker",
-    "description": "",
+    "isOnDevnet": false,
     "website": "https://monad-devnet-woad.vercel.app/",
-    "socials": null,
+    "description": "Token Locker",
     "notes": "",
-    "contact": ["oxshah"],
+    "contact": "oxshah",
     "relatedContractAddresses": ["0x9959312AD0f30315b0946FC05b383118aC81aC56"]
   },
   {
     "title": "Transaction Spammers",
-    "description": "",
+    "isOnDevnet": null,
     "website": "https://discord.com/channels/1263596865233096714/1324458370094202960/1324872434117115985",
-    "socials": null,
+    "description": "Transaction Generator Scripts",
     "notes": "",
-    "contact": ["Fearel_"],
+    "contact": "Fearel_",
     "relatedContractAddresses": []
   },
   {
-    ...
+    "title": "Disperse Dapp",
+    "isOnDevnet": null,
+    "website": "https://disperse-monad-testnet.vercel.app/",
+    "description": "Token Distribution Dapp",
+    "notes": "",
+    "contact": "_bitbull",
+    "relatedContractAddresses": ["0xdb81B820836EcbcAfc762D333B44F568804d1906"]
+  },
+  {
+    "title": "Yap Onchain",
+    "isOnDevnet": false,
+    "website": "https://yaponchain.xyz/",
+    "description": "Clicker game",
+    "notes": "",
+    "contact": ["italo.a", "BirckMega"],
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Wallet Tracker TG Bot",
+    "isOnDevnet": null,
+    "website": "https://t.me/monadDROPs_bot",
+    "description": "Wallet Tracker Bot",
+    "notes": "",
+    "contact": "@0xCoha",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Telegram Faucet Bot",
+    "isOnDevnet": null,
+    "website": "https://t.me/DevFaucetBot",
+    "description": "Devnet Faucet Bot",
+    "notes": "",
+    "contact": "ethharpreet",
+    "relatedContractAddresses": ["0x7796319f66587cEc5E680E7f63db351DC1c1Df46"]
+  },
+  {
+    "title": "Skrumpeys Open Edition Mint",
+    "isOnDevnet": false,
+    "website": "https://sites.google.com/view/skrumpey/homepage",
+    "description": "NFT Mint",
+    "notes": "Built using Thirdweb & Google Sites!",
+    "contact": "Wu_Wei (Melo)",
+    "relatedContractAddresses": ["0x1048583Be6ab77b2417ad15A627D1C4eAEdA1A2E"]
+  },
+  {
+    "title": "Spiky Nads NFT Mint",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/spikynads-open-edition/home",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "andalf",
+    "relatedContractAddresses": ["0x4A583e4ae9B1F679c3E24d6906626DD11b1B2665"]
+  },
+  {
+    "title": "Monad Diamond NFT Mint",
+    "isOnDevnet": false,
+    "website": "https://sites.google.com/view/monadiamond/accueil",
+    "description": "NFT Mint",
+    "notes": "Built using Thirdweb & Google Sites",
+    "contact": "superxxxxx",
+    "relatedContractAddresses": ["0xf64BCE151ce9261abe671f71Ad53953a12CFF2F2"]
+  },
+  {
+    "title": "Mouch NFT Mint",
+    "isOnDevnet": false,
+    "website": "https://sites.google.com/view/mouch/accueil",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "superxxxxx",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Monad Panda King NFT Mint",
+    "isOnDevnet": false,
+    "website": "https://sites.google.com/view/mintpage?usp=sharing",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "csura98",
+    "relatedContractAddresses": ["0x433e507eC6EC0b3547C1D55fF529a55c729c911f"]
+  },
+  {
+    "title": "Pyth Oracle",
+    "isOnDevnet": false,
+    "website": "https://brightstar-884.devnet1.monad.xyz/address/0x2880aB155794e7179c9eE2e38200202908C17B43",
+    "description": "Pyth Oracle to integrate with 630+ feeds",
+    "notes": "Docs",
+    "contact": "0xkaco",
+    "relatedContractAddresses": ["0x2880aB155794e7179c9eE2e38200202908C17B43"]
+  },
+  {
+    "title": "MultiCall3",
+    "isOnDevnet": true,
+    "website": "https://brightstar-884.devnet1.monad.xyz/address/0x987F35c8C94225FAF9dfd71fC6F0d59E6fF7ffAc",
+    "description": "MultiCall3 contract",
+    "notes": "",
+    "contact": "Box3338",
+    "relatedContractAddresses": ["0xb26338DE76c32d4faFfD11412F9e34bF31151fd8"]
+  },
+  {
+    "title": "Nitro Finance",
+    "isOnDevnet": false,
+    "website": "testapp.nitrofinance.xyz",
+    "description": "Provide your feedback here",
+    "notes": "Testnet Guide",
+    "contact": "karedesuu",
+    "relatedContractAddresses": ["0x64146CDc05785D3A9351fA5aED23A2577de1207A"]
+  },
+  {
+    "title": "Monad Name Service",
+    "isOnDevnet": true,
+    "website": "https://mon-name-domain.vercel.app/",
+    "description": ".mon name service",
+    "notes": "",
+    "contact": "veeno8009",
+    "relatedContractAddresses": ["0x7A02A501579122a86C371D2d1EA977beAf26A17F"]
+  },
+  {
+    "title": "House of Sharky NFT Mint",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/house-of-sharky",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "._.havoc._.",
+    "relatedContractAddresses": ["0xB7452bf47554491E8BeAd4B40434524F01ca4991"]
+  },
+  {
+    "title": "Pixelandak NFT Mint",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/pixelandak/startseite",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Botad",
+    "isOnDevnet": false,
+    "website": "https://sites.google.com/view/skatebotad/home",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "destinyae",
+    "relatedContractAddresses": ["0x97ea44bAc13006Ec124DC225280879D6DBf05c6D"]
+  },
+  {
+    "title": "Quant monkey",
+    "isOnDevnet": false,
+    "website": "https://sites.google.com/view/quant-monke",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "thislikee",
+    "relatedContractAddresses": ["0xA031BD27b1a7898474d6b419EC21B7c26A93a612"]
+  },
+  {
+    "title": "MINT ME OR PRAY FOR YOUR LIFE",
+    "isOnDevnet": false,
+    "website": "https://sites.google.com/view/anago/accueil",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "superxxxxx",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "MonCard",
+    "isOnDevnet": true,
+    "website": "https://moncard.web.app/",
+    "description": "NFT mint",
+    "notes": "",
+    "contact": "caginonthesky",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "UniswapV2",
+    "isOnDevnet": true,
+    "website": "https://devnet-uniswap-v2.vercel.app/",
+    "description": "DEX",
+    "notes": "",
+    "contact": "box3338",
+    "relatedContractAddresses": [
+      "0xb4c63abb68BE78e76a78B189d3a4D3Cd94e3838b",
+      "0x14B5d9930493a80808555DCf9B228fdEc460cd92",
+      "0x6cEfcd4DCA776FFaBF6E244616ea573e4d646566"
+    ]
+  },
+  {
+    "title": "YapMonad",
+    "isOnDevnet": true,
+    "website": "https://yapmonad.xyz/",
+    "description": "Game",
+    "notes": "",
+    "contact": "creator5923",
+    "relatedContractAddresses": ["0x9d0EC1b75dd4B80C678FC37c74E1E5FdDED7bDC0"]
+  },
+  {
+    "title": "Wendy's Fry Cook",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/wendysfrycook/accueil",
+    "description": "",
+    "notes": "",
+    "contact": "superxxxxx",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "ChogGladiators",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/choggladiators/home",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "uxmceal",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Monball",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/mintmonball/accueil",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "superxxxxx",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "monad muffled birdy market",
+    "isOnDevnet": true,
+    "website": "https://muffledbirdmarket.netlify.app/",
+    "description": "Mini Polymarket",
+    "notes": "",
+    "contact": "muffledbird",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Montiger",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/montiger-reupload/home",
+    "description": "",
+    "notes": "",
+    "contact": "juiceee.eth",
+    "relatedContractAddresses": []
   }
 ]
