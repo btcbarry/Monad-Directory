@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monad Directory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
@@ -20,7 +23,7 @@
 
         nav {
             background-color: white;
-            padding: 1rem;
+            padding: 1.5rem;
             position: sticky;
             top: 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -31,7 +34,7 @@
             list-style: none;
             display: flex;
             gap: 2rem;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -39,83 +42,195 @@
             text-decoration: none;
             color: #333;
             font-weight: 500;
+            font-size: 1.1rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 2rem auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
         }
 
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
-            margin-top: 2rem;
         }
 
         .project-card {
             background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
         }
 
         .project-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        .project-card h3 {
-            margin-bottom: 1rem;
-            color: #2d3748;
+        .project-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
         }
 
-        .project-card p {
-            margin-bottom: 1rem;
+        .project-header h3 {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .project-description {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border: 1px solid #e9ecef;
+            font-size: 1.1rem;
             color: #4a5568;
         }
 
         .button {
             display: inline-block;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             background-color: #6366f1;
             color: white;
             text-decoration: none;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            border: none;
-            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            margin: 1rem 0;
         }
 
         .button:hover {
             background-color: #4f46e5;
         }
 
-        .form-section {
-            display: none;
-            background: white;
-            padding: 2rem;
+        .contract-address {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 1rem;
             border-radius: 8px;
+            margin: 0.75rem 0;
+            font-family: 'SF Mono', 'Consolas', monospace;
+        }
+
+        .copy-button {
+            background: #e9ecef;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            margin-left: 1rem;
+            min-width: 80px;
+        }
+
+        .copy-button:hover {
+            background: #dee2e6;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            margin-left: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .controls-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-select, .sort-select {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            font-size: 1rem;
+            min-width: 150px;
+        }
+
+        .sort-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .form-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h2 {
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+            font-size: 1.8rem;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
         }
 
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            color: #4a5568;
         }
 
-        input, textarea, select {
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        input, textarea {
             width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #6366f1;
         }
 
         .success-message {
@@ -123,133 +238,37 @@
             background-color: #10B981;
             color: white;
             padding: 1rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-top: 1rem;
         }
 
-        .controls-section {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+        .project-notes {
+            margin: 1rem 0;
+            color: #4a5568;
         }
 
-        .filters {
-            display: flex;
-            gap: 1rem;
-            flex: 1;
+        .project-contact {
+            margin: 1rem 0;
+            color: #4a5568;
         }
 
-        .search-input {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            min-width: 200px;
-            flex: 1;
+        .contract-section {
+            margin-top: 1.5rem;
         }
 
-        .filter-select, .sort-select {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: white;
-        }
-
-        .sort-controls {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .sort-direction {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: white;
-            cursor: pointer;
-        }
-
-        .copy-button {
-            background: #f0f0f0;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-left: 8px;
-        }
-
-        .copy-button:hover {
-            background: #e0e0e0;
-        }
-
-        .contract-address {
-            font-family: monospace;
-            background: #f5f5f5;
-            padding: 0.5rem;
-            border-radius: 4px;
-            word-break: break-all;
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .advanced-filters {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: none;
-        }
-
-        .advanced-filters.show {
+        .contract-section strong {
             display: block;
-        }
-
-        .filter-group {
-            margin-bottom: 1rem;
-        }
-
-        .tag-filter {
-            display: inline-block;
-            padding: 4px 8px;
-            margin: 4px;
-            background: #f0f0f0;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .tag-filter.active {
-            background: #6366f1;
-            color: white;
-        }
-
-        .status-indicator {
-            display: inline-block;
-            margin-left: 8px;
-            font-size: 1.2em;
+            margin-bottom: 0.75rem;
+            color: #1a1a1a;
         }
 
         @media (max-width: 768px) {
-            .controls-section {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
             .filters {
                 flex-direction: column;
             }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
+            
+            .search-input, .filter-select, .sort-select {
+                width: 100%;
             }
         }
     </style>
@@ -257,68 +276,50 @@
 <body>
     <nav>
         <ul>
-            <li><a href="#" onclick="showDirectory()">Home</a></li>
-            <li><a href="#" onclick="showSubmitForm()">Submit Project</a></li>
+            <li><a href="#" onclick="showDirectory(); return false;">Directory</a></li>
+            <li><a href="#" onclick="showSubmitForm(); return false;">Submit a Project</a></li>
         </ul>
     </nav>
 
     <div class="container">
-        <div class="controls-section">
-            <div class="filters">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    placeholder="Search projects..."
-                    class="search-input"
-                >
-                <select id="devnetFilter" class="filter-select">
-                    <option value="all">All Projects</option>
-                    <option value="true">On Devnet</option>
-                    <option value="false">Not on Devnet</option>
-                </select>
-                <button id="toggleAdvancedFilters" class="button">
-                    Advanced Filters
-                </button>
-            </div>
-            <div class="sort-controls">
-                <select id="sortField" class="sort-select">
-                    <option value="title">Sort by Title</option>
-                    <option value="isOnDevnet">Sort by Devnet Status</option>
-                    <option value="description">Sort by Description</option>
-                    <option value="contact">Sort by Contact</option>
-                </select>
-                <button id="sortDirection" class="sort-direction">↑</button>
-            </div>
-        </div>
-
-        <div id="advancedFilters" class="advanced-filters">
-            <div class="filter-group">
-                <h4>Project Types</h4>
-                <div id="projectTypeTags"></div>
-            </div>
-            <div class="filter-group">
-                <h4>Contract Status</h4>
-                <div id="contractTags">
-                    <span class="tag-filter" data-filter="hasContract">Has Contract</span>
-                    <span class="tag-filter" data-filter="noContract">No Contract</span>
+        <div id="directory">
+            <div class="controls-section">
+                <div class="filters">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search projects..."
+                        class="search-input"
+                    >
+                    <select id="devnetFilter" class="filter-select">
+                        <option value="all">All Projects</option>
+                        <option value="true">On Devnet</option>
+                        <option value="false">Not on Devnet</option>
+                    </select>
+                </div>
+                <div class="sort-controls">
+                    <select id="sortField" class="sort-select">
+                        <option value="title">Sort by Title</option>
+                        <option value="isOnDevnet">Sort by Devnet Status</option>
+                        <option value="description">Sort by Description</option>
+                        <option value="contact">Sort by Contact</option>
+                    </select>
+                    <button id="sortDirection" class="sort-direction">↑</button>
                 </div>
             </div>
+            <div class="projects-grid"></div>
         </div>
 
-        <div id="directory" class="projects-grid"></div>
-
-        <div id="submit-form" class="form-section">
-            <h2>Submit New Project</h2>
+        <div id="submit-form" class="form-section" style="display: none;">
+            <h2>Submit a Project</h2>
             <form id="projectForm" onsubmit="handleSubmit(event)">
                 <div class="form-group">
                     <label for="title">Project Title</label>
                     <input type="text" id="title" required>
                 </div>
-                <div class="form-group">
-                    <label for="isOnDevnet">
-                        <input type="checkbox" id="isOnDevnet">
-                        Project is on Devnet
-                    </label>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="isOnDevnet">
+                    <label for="isOnDevnet">Is the project live on devnet?</label>
                 </div>
                 <div class="form-group">
                     <label for="website">Website URL</label>
@@ -326,11 +327,11 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea id="description" required></textarea>
+                    <textarea id="description" required rows="4"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes (Optional)</label>
-                    <textarea id="notes"></textarea>
+                    <textarea id="notes" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="contact">Contact Information</label>
@@ -338,7 +339,7 @@
                 </div>
                 <div class="form-group">
                     <label for="contracts">Contract Addresses (one per line)</label>
-                    <textarea id="contracts" placeholder="0x..."></textarea>
+                    <textarea id="contracts" rows="3" placeholder="0x..."></textarea>
                 </div>
                 <button type="submit" class="button">Submit Project</button>
             </form>
@@ -366,14 +367,21 @@
             const devnetStatus = project.isOnDevnet === true ? '✅' : 
                                project.isOnDevnet === false ? '⛔️' : '';
             
+            const formattedTitle = project.title.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+
+            const contactDisplay = Array.isArray(project.contact) 
+                ? project.contact.map(c => `@${c}`).join(', ')
+                : `@${project.contact}`;
+
             const contractAddresses = project.relatedContractAddresses.length 
                 ? project.relatedContractAddresses.map(addr => `
                     <div class="contract-address">
                         <span>${addr}</span>
-                        <button 
-                            class="copy-button" 
-                            onclick="copyToClipboard('${addr}', this)"
-                        >Copy</button>
+                        <button class="copy-button" onclick="copyToClipboard('${addr}', this)">
+                            Copy
+                        </button>
                     </div>
                 `).join('')
                 : '<p>No contract addresses available</p>';
@@ -381,46 +389,20 @@
             return `
                 <div class="project-card">
                     <div class="project-header">
-                        <h3>${project.title} <span class="status-indicator">${devnetStatus}</span></h3>
+                        <h3>${formattedTitle} <span class="status-indicator">${devnetStatus}</span></h3>
                     </div>
-                    <p>${project.description}</p>
+                    <div class="project-description">
+                        ${project.description}
+                    </div>
                     <a href="${project.website}" class="button" target="_blank">Visit Website</a>
-                    ${project.notes ? `<p><strong>Notes:</strong> ${project.notes}</p>` : ''}
-                    <p><strong>Contact:</strong> ${Array.isArray(project.contact) ? project.contact.join(', ') : project.contact}</p>
+                    ${project.notes ? `<p class="project-notes"><strong>Notes:</strong> ${project.notes}</p>` : ''}
+                    <p class="project-contact"><strong>Contact:</strong> ${contactDisplay}</p>
                     <div class="contract-section">
                         <strong>Contract Addresses:</strong>
                         ${contractAddresses}
                     </div>
                 </div>
             `;
-        }
-
-        function initializeAdvancedFilters() {
-            const projectTypes = new Set();
-            projectsData.forEach(project => {
-                if (project.description.toLowerCase().includes('nft')) projectTypes.add('NFT');
-                if (project.description.toLowerCase().includes('dex')) projectTypes.add('DEX');
-                if (project.description.toLowerCase().includes('game')) projectTypes.add('Game');
-                if (project.description.toLowerCase().includes('bot')) projectTypes.add('Bot');
-            });
-
-            const projectTypeTags = document.getElementById('projectTypeTags');
-            projectTypeTags.innerHTML = Array.from(projectTypes).map(type => 
-                `<span class="tag-filter" data-filter="type-${type.toLowerCase()}">${type}</span>`
-            ).join('');
-
-            document.querySelectorAll('.tag-filter').forEach(tag => {
-                tag.addEventListener('click', () => {
-                    tag.classList.toggle('active');
-                    const filter = tag.dataset.filter;
-                    if (tag.classList.contains('active')) {
-                        activeFilters.add(filter);
-                    } else {
-                        activeFilters.delete(filter);
-                    }
-                    applyFiltersAndSort();
-                });
-            });
         }
 
         async function loadProjects() {
@@ -430,8 +412,6 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 projectsData = await response.json();
-                console.log('Loaded projects:', projectsData);
-                initializeAdvancedFilters();
                 applyFiltersAndSort();
             } catch (error) {
                 console.error('Error loading projects:', error);
@@ -446,7 +426,6 @@
         function applyFiltersAndSort() {
             let filteredProjects = [...projectsData];
             
-            // Apply search filter
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             if (searchTerm) {
                 filteredProjects = filteredProjects.filter(project => 
@@ -456,31 +435,13 @@
                 );
             }
             
-            // Apply devnet filter
             const devnetFilter = document.getElementById('devnetFilter').value;
             if (devnetFilter !== 'all') {
                 filteredProjects = filteredProjects.filter(project => 
                     project.isOnDevnet === (devnetFilter === 'true')
                 );
             }
-
-            // Apply advanced filters
-            if (activeFilters.size > 0) {
-                filteredProjects = filteredProjects.filter(project => {
-                    const desc = project.description.toLowerCase();
-                    return Array.from(activeFilters).every(filter => {
-                        if (filter === 'hasContract') return project.relatedContractAddresses.length > 0;
-                        if (filter === 'noContract') return project.relatedContractAddresses.length === 0;
-                        if (filter.startsWith('type-')) {
-                            const type = filter.replace('type-', '');
-                            return desc.includes(type);
-                        }
-                        return true;
-                    });
-                });
-            }
             
-            // Apply sorting
             const sortField = document.getElementById('sortField').value;
             filteredProjects.sort((a, b) => {
                 let valueA = a[sortField];
@@ -498,11 +459,11 @@
             });
             
             const directory = document.getElementById('directory');
-            directory.innerHTML = filteredProjects.map(renderProjectCard).join('');
+            directory.querySelector('.projects-grid').innerHTML = filteredProjects.map(renderProjectCard).join('');
         }
 
         function showDirectory() {
-            document.getElementById('directory').style.display = 'grid';
+            document.getElementById('directory').style.display = 'block';
             document.getElementById('submit-form').style.display = 'none';
         }
 
@@ -545,10 +506,6 @@
                 sortAscending = !sortAscending;
                 document.getElementById('sortDirection').textContent = sortAscending ? '↑' : '↓';
                 applyFiltersAndSort();
-            });
-
-            document.getElementById('toggleAdvancedFilters').addEventListener('click', () => {
-                document.getElementById('advancedFilters').classList.toggle('show');
             });
         });
     </script>
