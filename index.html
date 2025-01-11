@@ -6,27 +6,66 @@
     <title>Monad Directory</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #6366f1;
+            --background: #0a0a0a;
+            --text: #ffffff;
+            --text-secondary: #a1a1aa;
+            --card-bg: #18181b;
+            --border: #27272a;
+            --hover-border: #3f3f46;
+            --success: #059669;
+            --error: #dc2626;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: var(--background);
+            color: var(--text);
             line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .site-header {
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.1), transparent);
+        }
+
+        .site-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         nav {
-            background-color: white;
-            padding: 1.5rem;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem;
             position: sticky;
             top: 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 1px solid var(--border);
             z-index: 1000;
         }
 
@@ -34,41 +73,93 @@
             list-style: none;
             display: flex;
             gap: 2rem;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
         nav a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-secondary);
             font-weight: 500;
-            font-size: 1.1rem;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: var(--text);
         }
 
         .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .controls-section {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            background: var(--background);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+        }
+
+        .filter-select, .sort-select {
+            background: var(--background);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            min-width: 150px;
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:hover, .sort-select:hover {
+            border-color: var(--hover-border);
         }
 
         .projects-grid {
-            display: flex;
-            flex-direction: column;
+            display: grid;
             gap: 2rem;
+            grid-template-columns: 1fr;
         }
 
         .project-card {
-            background: white;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%;
+            transition: all 0.2s ease;
         }
 
         .project-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: var(--hover-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .project-header {
@@ -80,61 +171,67 @@
 
         .project-header h3 {
             font-size: 1.5rem;
-            color: #1a1a1a;
             font-weight: 600;
+            color: var(--text);
         }
 
         .project-description {
-            background: #f8f9fa;
-            border-radius: 8px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             padding: 1.25rem;
+            color: var(--text-secondary);
             margin: 1rem 0;
-            border: 1px solid #e9ecef;
-            font-size: 1.1rem;
-            color: #4a5568;
+            font-size: 0.95rem;
         }
 
         .button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             padding: 0.75rem 1.5rem;
-            background-color: #6366f1;
+            background-color: var(--primary);
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 500;
-            transition: background-color 0.2s;
-            margin: 1rem 0;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .button:hover {
-            background-color: #4f46e5;
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         .contract-address {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.75rem 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 0.75rem 0;
             font-family: 'SF Mono', 'Consolas', monospace;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         .copy-button {
-            background: #e9ecef;
-            border: none;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
             padding: 0.5rem 1rem;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s;
-            margin-left: 1rem;
-            min-width: 80px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
         }
 
         .copy-button:hover {
-            background: #dee2e6;
+            border-color: var(--primary);
+            background: var(--background);
         }
 
         .status-indicator {
@@ -142,60 +239,22 @@
             margin-left: 0.75rem;
             font-size: 1.2rem;
         }
-
-        .controls-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .filters {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-input {
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-select, .sort-select {
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background: white;
-            font-size: 1rem;
-            min-width: 150px;
-        }
-
-        .sort-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
         .form-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
             max-width: 800px;
             margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .form-section h2 {
+            color: var(--text);
             margin-bottom: 2rem;
-            color: #1a1a1a;
             font-size: 1.8rem;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .form-group {
@@ -205,75 +264,89 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
+            color: var(--text-secondary);
             font-weight: 500;
-            color: #4a5568;
+        }
+
+        input, textarea {
+            background: var(--background);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.75rem;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
         }
 
         .checkbox-group {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 0.5rem 0;
         }
 
         .checkbox-group input[type="checkbox"] {
-            width: auto;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #6366f1;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
         .success-message {
-            display: none;
-            background-color: #10B981;
+            background: var(--success);
             color: white;
             padding: 1rem;
             border-radius: 8px;
             margin-top: 1rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
         }
 
-        .project-notes {
-            margin: 1rem 0;
-            color: #4a5568;
-        }
-
-        .project-contact {
-            margin: 1rem 0;
-            color: #4a5568;
-        }
-
-        .contract-section {
-            margin-top: 1.5rem;
-        }
-
-        .contract-section strong {
-            display: block;
-            margin-bottom: 0.75rem;
-            color: #1a1a1a;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
+            .site-header {
+                padding: 2rem 1rem;
+            }
+            
+            .site-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .project-card {
+                padding: 1.5rem;
+            }
+
             .filters {
                 flex-direction: column;
             }
-            
-            .search-input, .filter-select, .sort-select {
-                width: 100%;
+
+            .search-input {
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
+    <header class="site-header">
+        <h1>Monad Directory</h1>
+        <p class="hero-text">The comprehensive directory of projects building on Monad.</p>
+    </header>
+
     <nav>
         <ul>
             <li><a href="#" onclick="showDirectory(); return false;">Directory</a></li>
@@ -296,15 +369,13 @@
                         <option value="true">On Devnet</option>
                         <option value="false">Not on Devnet</option>
                     </select>
-                </div>
-                <div class="sort-controls">
                     <select id="sortField" class="sort-select">
                         <option value="title">Sort by Title</option>
                         <option value="isOnDevnet">Sort by Devnet Status</option>
                         <option value="description">Sort by Description</option>
                         <option value="contact">Sort by Contact</option>
                     </select>
-                    <button id="sortDirection" class="sort-direction">↑</button>
+                    <button id="sortDirection" class="copy-button">↑</button>
                 </div>
             </div>
             <div class="projects-grid"></div>
@@ -344,7 +415,7 @@
                 <button type="submit" class="button">Submit Project</button>
             </form>
             <div id="success-message" class="success-message">
-                Your submission has been received and is pending approval.
+                Project submitted successfully! We'll review it shortly.
             </div>
         </div>
     </div>
@@ -352,13 +423,17 @@
     <script>
         let projectsData = [];
         let sortAscending = true;
-        let activeFilters = new Set();
 
         function copyToClipboard(text, button) {
             navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
                 button.textContent = 'Copied!';
+                button.style.borderColor = 'var(--success)';
+                button.style.color = 'var(--success)';
                 setTimeout(() => {
-                    button.textContent = 'Copy';
+                    button.textContent = originalText;
+                    button.style.borderColor = '';
+                    button.style.color = '';
                 }, 2000);
             });
         }
@@ -375,17 +450,6 @@
                 ? project.contact.map(c => `@${c}`).join(', ')
                 : `@${project.contact}`;
 
-            const contractAddresses = project.relatedContractAddresses.length 
-                ? project.relatedContractAddresses.map(addr => `
-                    <div class="contract-address">
-                        <span>${addr}</span>
-                        <button class="copy-button" onclick="copyToClipboard('${addr}', this)">
-                            Copy
-                        </button>
-                    </div>
-                `).join('')
-                : '<p>No contract addresses available</p>';
-
             return `
                 <div class="project-card">
                     <div class="project-header">
@@ -395,11 +459,21 @@
                         ${project.description}
                     </div>
                     <a href="${project.website}" class="button" target="_blank">Visit Website</a>
-                    ${project.notes ? `<p class="project-notes"><strong>Notes:</strong> ${project.notes}</p>` : ''}
-                    <p class="project-contact"><strong>Contact:</strong> ${contactDisplay}</p>
+                    ${project.notes ? `<p class="project-description"><strong>Notes:</strong> ${project.notes}</p>` : ''}
+                    <p style="color: var(--text-secondary); margin: 1rem 0;"><strong>Contact:</strong> ${contactDisplay}</p>
                     <div class="contract-section">
                         <strong>Contract Addresses:</strong>
-                        ${contractAddresses}
+                        ${project.relatedContractAddresses.length 
+                            ? project.relatedContractAddresses.map(addr => `
+                                <div class="contract-address">
+                                    <span>${addr}</span>
+                                    <button class="copy-button" onclick="copyToClipboard('${addr}', this)">
+                                        Copy
+                                    </button>
+                                </div>
+                            `).join('')
+                            : '<p style="color: var(--text-secondary);">No contract addresses available</p>'
+                        }
                     </div>
                 </div>
             `;
@@ -408,16 +482,14 @@
         async function loadProjects() {
             try {
                 const response = await fetch('projects.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 projectsData = await response.json();
                 applyFiltersAndSort();
             } catch (error) {
                 console.error('Error loading projects:', error);
-                document.getElementById('directory').innerHTML = `
-                    <div style="color: red; padding: 20px;">
-                        Error loading projects. Please check the console for details.
+                document.querySelector('.projects-grid').innerHTML = `
+                    <div style="color: var(--error); padding: 20px;">
+                        Error loading projects. Please try again later.
                     </div>
                 `;
             }
@@ -458,8 +530,8 @@
                     valueB.localeCompare(valueA);
             });
             
-            const directory = document.getElementById('directory');
-            directory.querySelector('.projects-grid').innerHTML = filteredProjects.map(renderProjectCard).join('');
+            document.querySelector('.projects-grid').innerHTML = 
+                filteredProjects.map(renderProjectCard).join('');
         }
 
         function showDirectory() {
