@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Project - Monad Directory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="submit.html" class="active">Submit a Project</a>
+            <a href="update.html">Update Project</a>
+        </nav>
+
+        <h1>Submit a Project</h1>
+        <p>Submit your project to be listed in the Monad Directory</p>
+        
+        <form id="projectForm">
+            <div class="form-group">
+                <label for="title">Project Title*</label>
+                <input type="text" id="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="website">Website URL*</label>
+                <input type="url" id="website" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description*</label>
+                <textarea id="description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Additional Notes</label>
+                <textarea id="notes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Contact Email*</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Contact (Discord/Telegram)*</label>
+                <input type="text" id="contact" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contractAddresses">Contract Addresses</label>
+                <input type="text" id="contractAddresses">
+            </div>
+
+            <button type="submit" class="submit-button">Submit Project</button>
+        </form>
+        
+        <div id="successMessage" class="success-message" style="display: none;">
+            Your project has been submitted for review!
+        </div>
+    </div>
+
+    <script src="submit.js"></script>
+</body>
+</html>
