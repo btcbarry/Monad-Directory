@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Project - Monad Directory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="submit.html">Submit a Project</a>
+            <a href="update.html" class="active">Update Project</a>
+        </nav>
+
+        <h1>Update Existing Project</h1>
+        <p>Submit a request to update your project's information. All updates require approval.</p>
+        
+        <form id="updateForm">
+            <div class="form-group">
+                <label for="existingTitle">Current Project Title*</label>
+                <input type="text" id="existingTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="updateType">What would you like to update?*</label>
+                <select id="updateType" required onchange="showUpdateFields()">
+                    <option value="">Select update type</option>
+                    <option value="devnet">Devnet Status</option>
+                    <option value="details">Project Details</option>
+                </select>
+            </div>
+
+            <div id="devnetFields" style="display: none;">
+                <div class="form-group">
+                    <label>New Devnet Status*</label>
+                    <select id="devnetStatus" required>
+                        <option value="true">Now on Devnet</option>
+                        <option value="false">Not on Devnet</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="detailFields" style="display: none;">
+                <div class="form-group">
+                    <label for="newWebsite">New Website URL</label>
+                    <input type="url" id="newWebsite">
+                </div>
+                <div class="form-group">
+                    <label for="newDescription">New Description</label>
+                    <textarea id="newDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="newContractAddresses">New Contract Addresses</label>
+                    <input type="text" id="newContractAddresses">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="updateEmail">Contact Email*</label>
+                <input type="email" id="updateEmail" required>
+            </div>
+
+            <div class="form-group">
+                <label for="updateContact">Contact (Discord/Telegram)*</label>
+                <input type="text" id="updateContact" required>
+            </div>
+
+            <button type="submit" class="submit-button">Submit Update Request</button>
+        </form>
+        
+        <div id="updateSuccessMessage" class="success-message" style="display: none;">
+            Your update request has been submitted for review. We'll contact you once it's approved.
+        </div>
+    </div>
+
+    <script src="update.js"></script>
+</body>
+</html>
