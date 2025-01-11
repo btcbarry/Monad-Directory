@@ -1,0 +1,35 @@
+name: Update Directory
+
+on:
+  repository_dispatch:
+    types: [update_directory]
+
+jobs:
+  update-directory:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Update project data
+        run: |
+          # Create projects.json if it doesn't exist
+          if [ ! -f projects.json ]; then
+            echo '{"projects":[]}' > projects.json
+          fi
+          
+          # Add new project
+          PROJECT_DATA='${{ toJson(github.event.client_payload.project) }}'
+          echo "$PROJECT_DATA" | jq -r '. as $new | 
+            reduce inputs as $in ({projects:[]}; 
+              .projects += [$new]
+            )' projects.json > temp.json && mv temp.json projects.json
+          
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add projects.json
+          git commit -m "Add new approved project via automation"
+          git push
