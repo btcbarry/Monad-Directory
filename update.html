@@ -4,77 +4,269 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Project - Monad Directory</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Base styles - same as index.html and submit.html */
+        body {
+            background-color: #111;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            background: linear-gradient(
+                to right,
+                #e040fb 20%,
+                #00e5ff 30%,
+                #e040fb 70%,
+                #00e5ff 80%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: shine 10s linear infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .beta {
+            font-size: 16px;
+            vertical-align: super;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            padding: 20px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+        }
+
+        nav a:hover {
+            color: #e040fb;
+        }
+
+        /* Form specific styles */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .submit-button {
+            background: #e040fb;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background: #d040e9;
+        }
+
+        .note {
+            color: #888;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .section-divider {
+            border-top: 1px solid #333;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <h1>Monad Directory<span class="beta">beta</span></h1>
+        <p class="subtitle">Update your existing project information.</p>
+        
         <nav>
             <a href="index.html">Home</a>
             <a href="submit.html">Submit a Project</a>
-            <a href="update.html" class="active">Update Project</a>
+            <a href="update.html">Update Project</a>
         </nav>
 
-        <h1>Update Existing Project</h1>
-        <p>Submit a request to update your project's information. All updates require approval.</p>
-        
-        <form id="updateForm">
-            <div class="form-group">
-                <label for="existingTitle">Current Project Title*</label>
-                <input type="text" id="existingTitle" required>
-            </div>
-
-            <div class="form-group">
-                <label for="updateType">What would you like to update?*</label>
-                <select id="updateType" required onchange="showUpdateFields()">
-                    <option value="">Select update type</option>
-                    <option value="devnet">Devnet Status</option>
-                    <option value="details">Project Details</option>
-                </select>
-            </div>
-
-            <div id="devnetFields" style="display: none;">
+        <div class="form-container">
+            <form id="updateForm">
                 <div class="form-group">
-                    <label>New Devnet Status*</label>
-                    <select id="devnetStatus" required>
-                        <option value="true">Now on Devnet</option>
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" name="projectTitle" required>
+                    <div class="note">Enter the exact title of your existing project</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="verificationContact">Your Contact Information</label>
+                    <input type="text" id="verificationContact" name="verificationContact" required>
+                    <div class="note">Must match the contact information used in the original submission</div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="form-group">
+                    <label for="newWebsite">New Website URL</label>
+                    <input type="url" id="newWebsite" name="newWebsite">
+                    <div class="note">Leave blank if unchanged</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="newDescription">New Description</label>
+                    <textarea id="newDescription" name="newDescription"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="newNotes">New Additional Notes</label>
+                    <textarea id="newNotes" name="newNotes"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="newContact">New Contact Information</label>
+                    <input type="text" id="newContact" name="newContact">
+                </div>
+
+                <div class="form-group">
+                    <label for="newContractAddresses">New Contract Addresses</label>
+                    <textarea id="newContractAddresses" name="newContractAddresses" placeholder="One address per line"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="newDevnetStatus">New Devnet Status</label>
+                    <select id="newDevnetStatus" name="newDevnetStatus">
+                        <option value="">No change</option>
+                        <option value="true">On Devnet</option>
                         <option value="false">Not on Devnet</option>
                     </select>
                 </div>
-            </div>
 
-            <div id="detailFields" style="display: none;">
-                <div class="form-group">
-                    <label for="newWebsite">New Website URL</label>
-                    <input type="url" id="newWebsite">
-                </div>
-                <div class="form-group">
-                    <label for="newDescription">New Description</label>
-                    <textarea id="newDescription"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="newContractAddresses">New Contract Addresses</label>
-                    <input type="text" id="newContractAddresses">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="updateEmail">Contact Email*</label>
-                <input type="email" id="updateEmail" required>
-            </div>
-
-            <div class="form-group">
-                <label for="updateContact">Contact (Discord/Telegram)*</label>
-                <input type="text" id="updateContact" required>
-            </div>
-
-            <button type="submit" class="submit-button">Submit Update Request</button>
-        </form>
-        
-        <div id="updateSuccessMessage" class="success-message" style="display: none;">
-            Your update request has been submitted for review. We'll contact you once it's approved.
+                <button type="submit" class="submit-button">Update Project</button>
+            </form>
         </div>
     </div>
 
-    <script src="update.js"></script>
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                projectTitle: document.getElementById('projectTitle').value,
+                verificationContact: document.getElementById('verificationContact').value,
+                updates: {
+                    website: document.getElementById('newWebsite').value,
+                    description: document.getElementById('newDescription').value,
+                    notes: document.getElementById('newNotes').value,
+                    contact: document.getElementById('newContact').value,
+                    relatedContractAddresses: document.getElementById('newContractAddresses').value
+                        .split('\n')
+                        .map(addr => addr.trim())
+                        .filter(addr => addr),
+                    isOnDevnet: document.getElementById('newDevnetStatus').value || undefined
+                }
+            };
+
+            // Here you would typically send this data to your backend
+            console.log('Update requested:', formData);
+            alert('Thank you for submitting your update request! We will review it shortly.');
+            
+            // Reset form
+            e.target.reset();
+        });
+    </script>
 </body>
 </html>
