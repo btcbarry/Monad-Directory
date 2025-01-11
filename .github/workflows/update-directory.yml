@@ -19,17 +19,21 @@ jobs:
             echo '{"projects":[]}' > projects.json
           fi
           
-          # Add new project
+          # Add new project only if not a test
           PROJECT_DATA='${{ toJson(github.event.client_payload.project) }}'
-          echo "$PROJECT_DATA" | jq -r '. as $new | 
-            reduce inputs as $in ({projects:[]}; 
-              .projects += [$new]
-            )' projects.json > temp.json && mv temp.json projects.json
+          if [[ $(echo "$PROJECT_DATA" | jq -r '.isTest') != "true" ]]; then
+            echo "$PROJECT_DATA" | jq -r '. as $new | 
+              reduce inputs as $in ({projects:[]}; 
+                .projects += [$new]
+              )' projects.json > temp.json && mv temp.json projects.json
+          fi
           
       - name: Commit and push changes
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add projects.json
-          git commit -m "Add new approved project via automation"
-          git push
+          if [[ -f temp.json ]]; then
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add projects.json
+            git commit -m "Add new approved project via automation"
+            git push
+          fi
