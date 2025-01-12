@@ -1,0 +1,151 @@
+/* Reset existing card styles */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    background: #13111C;
+}
+
+/* Card Container */
+.project-card {
+    position: relative;
+    background: #1A1825;
+    border: 1px solid #2D2B3B;
+    border-radius: 12px;
+    padding: 20px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease;
+}
+
+.project-card:hover {
+    border-color: #6E56CF;
+}
+
+/* Status Badge */
+.status-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge .badge-text {
+    color: #4ADE80;
+}
+
+/* Card Content */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-title {
+    color: #E0DEF4;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    padding-right: 100px; /* Space for badge */
+}
+
+.description-box p {
+    color: #908CAA;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Contract Box */
+.contract-box {
+    background: #211F2D;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.contract-address {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contract-address code {
+    color: #E0DEF4;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.copy-btn {
+    background: #2D2B3B;
+    border: none;
+    border-radius: 4px;
+    color: #908CAA;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: #3C3A4D;
+    color: #E0DEF4;
+}
+
+/* Contact Box */
+.contact-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact-label {
+    color: #908CAA;
+    font-size: 12px;
+}
+
+.contact-value {
+    color: #6E56CF;
+    font-size: 14px;
+}
+
+/* Website Button */
+.website-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #6E56CF;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: auto;
+    transition: background-color 0.2s ease;
+}
+
+.website-btn:hover {
+    background: #7C66DC;
+}
+
+/* Status Colors */
+.status-badge[data-status="devnet"] .badge-text {
+    color: #4ADE80;
+}
+
+.status-badge[data-status="not-devnet"] .badge-text {
+    color: #FF9494;
+}
+
+.status-badge[data-status="unknown"] .badge-text {
+    color: #908CAA;
+} 
