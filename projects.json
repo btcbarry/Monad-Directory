@@ -185,7 +185,7 @@
   {
     "title": "Nitro Finance",
     "isOnDevnet": false,
-    "website": "testapp.nitrofinance.xyz",
+    "website": "https://testapp.nitrofinance.xyz",
     "description": "Provide your feedback here",
     "notes": "Testnet Guide",
     "contact": "karedesuu",
@@ -332,17 +332,5 @@
     "notes": "",
     "contact": "juiceee.eth",
     "relatedContractAddresses": []
-  },
-  {
-    "title": "GitHub Integration Test",
-    "isOnDevnet": true,
-    "website": "https://github-test.xyz",
-    "description": "Testing GitHub integration",
-    "notes": "Testing automatic updates",
-    "contact": "testuser#github",
-    "relatedContractAddresses": [
-      "0xTEST123",
-      "0xTEST456"
-    ]
   }
 ]
