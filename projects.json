@@ -12,7 +12,7 @@
   },
   {
     "title": "BreakMonad",
-    "isOnDevnet": false,
+    "isOnDevnet": true,
     "website": "https://www.breakmonad.com/",
     "description": "Click to send transactions. Mint an NFT representative of you trying to break devnet.",
     "notes": "NFT mint feature is being debugged.",
@@ -46,8 +46,8 @@
   },
   {
     "title": "Token Locker",
-    "isOnDevnet": false,
-    "website": "https://monad-devnet-woad.vercel.app/",
+    "isOnDevnet": true,
+    "website": "https://token-locker-devnet-v2.vercel.app/",
     "description": "Token Locker",
     "notes": "",
     "contact": "oxshah",
@@ -77,7 +77,7 @@
   },
   {
     "title": "Yap Onchain",
-    "isOnDevnet": false,
+    "isOnDevnet": true,
     "website": "https://yaponchain.xyz/",
     "description": "Clicker game",
     "notes": "",
@@ -85,7 +85,10 @@
       "italo.a",
       "BirckMega"
     ],
-    "relatedContractAddresses": []
+    "relatedContractAddresses": [
+      "0x135Cd811302E1816C5BfaF1F5607c234C157a5E1",
+      "0x7B854F28fF59Eb9f9FC6ADc1eB63dc5C5E0E6943"
+    ]
   },
   {
     "title": "Wallet Tracker TG Bot",
@@ -98,7 +101,7 @@
   },
   {
     "title": "Telegram Faucet Bot",
-    "isOnDevnet": null,
+    "isOnDevnet": true,
     "website": "https://t.me/DevFaucetBot",
     "description": "Devnet Faucet Bot",
     "notes": "",
@@ -109,7 +112,7 @@
   },
   {
     "title": "Skrumpeys Open Edition Mint",
-    "isOnDevnet": false,
+    "isOnDevnet": true,
     "website": "https://sites.google.com/view/skrumpey/homepage",
     "description": "NFT Mint",
     "notes": "Built using Thirdweb & Google Sites!",
@@ -142,7 +145,7 @@
   },
   {
     "title": "Mouch NFT Mint",
-    "isOnDevnet": false,
+    "isOnDevnet": true,
     "website": "https://sites.google.com/view/mouch/accueil",
     "description": "NFT Mint",
     "notes": "",
@@ -151,7 +154,7 @@
   },
   {
     "title": "Monad Panda King NFT Mint",
-    "isOnDevnet": false,
+    "isOnDevnet": true,
     "website": "https://sites.google.com/view/mintpage?usp=sharing",
     "description": "NFT Mint",
     "notes": "",
@@ -196,12 +199,12 @@
   {
     "title": "Monad Name Service",
     "isOnDevnet": true,
-    "website": "https://mon-name-domain.vercel.app/",
+    "website": "https://monad-domain-name.vercel.app/",
     "description": ".mon name service",
     "notes": "",
     "contact": "veeno8009",
     "relatedContractAddresses": [
-      "0x7A02A501579122a86C371D2d1EA977beAf26A17F"
+      "0xE81e608F7B4A9291581C4e0d365c666cF0d8fB5d"
     ]
   },
   {
@@ -226,7 +229,7 @@
   },
   {
     "title": "Botad",
-    "isOnDevnet": false,
+    "isOnDevnet": true,
     "website": "https://sites.google.com/view/skatebotad/home",
     "description": "NFT Mint",
     "notes": "",
@@ -331,6 +334,221 @@
     "description": "NFT Mint",
     "notes": "",
     "contact": "juiceee.eth",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Purple Cat",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/purple-cat/",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "jaizard2020",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "RedPacket",
+    "isOnDevnet": true,
+    "website": "https://rp.web3polaris.xyz/",
+    "description": "RandomGift Dapp",
+    "notes": "from WeChatGruop",
+    "contact": "#Scofield_9527",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "FLIP",
+    "isOnDevnet": true,
+    "website": "https://www.flipnft.xyz/",
+    "description": "NFT Liquidity Solution, Bonding Curve NFT",
+    "notes": "from WeChatGruop",
+    "contact": "#LukeMa95",
+    "relatedContractAddresses": [
+      "0x53B6a93DADA457FC8BF2e6F4f30Ec26Bda7d81Ab"
+    ]
+  },
+  {
+    "title": "Gmonad Club",
+    "isOnDevnet": true,
+    "website": "https://www.gmonad.club/",
+    "description": "Clicker Game",
+    "notes": "",
+    "contact": "yashjhade",
+    "relatedContractAddresses": [
+      "0x73C6221a2efC78B8941185935AcF0EED383B67a1"
+    ]
+  },
+  {
+    "title": "Monad Faucet",
+    "isOnDevnet": true,
+    "website": "https://monad-faucet.vercel.app/",
+    "description": "2 $MON every 24 hours",
+    "notes": "",
+    "contact": "husseinrasti",
+    "relatedContractAddresses": [
+      "0xA9AAc02F0F6EADB7A7A8e8d2dc254bf7e6197A5A"
+    ]
+  },
+  {
+    "title": "Monad ID",
+    "isOnDevnet": true,
+    "website": "https://monad-id.netlify.app/",
+    "description": "",
+    "notes": "",
+    "contact": "tuzhkid",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Dark Forest Ares",
+    "isOnDevnet": true,
+    "website": "https://dfares-monad.netlify.app/",
+    "description": "",
+    "notes": "wechat#pinkmainend",
+    "contact": "byeddy.eth",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Moyaki",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/moyaki/home",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "juiceee.eth",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Emelverse",
+    "isOnDevnet": true,
+    "website": "https://www.emelverse.xyz/",
+    "description": "NFT Collection creation tool",
+    "notes": "",
+    "contact": "dominica400",
+    "relatedContractAddresses": [
+      "0xAfF72Db3fA597546517d172be9A530E99AEDddFE"
+    ]
+  },
+  {
+    "title": "10k DAO",
+    "isOnDevnet": true,
+    "website": "https://10kdao.vercel.app/",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "uday_04",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "PlushieHQ",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/plushiehq/",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "diegovas_",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Uniswap v4 (no UI)",
+    "isOnDevnet": true,
+    "website": "https://explorer.monad-devnet.devnet101.com/address/0x610178dA211FEF7D417bC0e6FeD39F05609AD788?tab=contract",
+    "description": "Uniswap v4 no UI",
+    "notes": "",
+    "contact": "0xawm",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Task Flow",
+    "isOnDevnet": true,
+    "website": "https://task-flow-three-dusky.vercel.app/",
+    "description": "Onchain Task Management",
+    "notes": "",
+    "contact": "defidevrel",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "News Ai Agent",
+    "isOnDevnet": true,
+    "website": "https://monad-mag.vercel.app/",
+    "description": "News Ai agent",
+    "notes": "",
+    "contact": "#wxid134feng",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Purged Nads",
+    "isOnDevnet": true,
+    "website": "https://purgednads.vercel.app/",
+    "description": "Game",
+    "notes": "",
+    "contact": "mj.a",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Keone 1k Nads",
+    "isOnDevnet": true,
+    "website": "https://sites.google.com/view/keone1k-nads/home",
+    "description": "",
+    "notes": "",
+    "contact": "masrafe007",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Vault Nads",
+    "isOnDevnet": true,
+    "website": "https://vault-nad.vercel.app/",
+    "description": "",
+    "notes": "",
+    "contact": "defidevrel",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "FastLane Flarry",
+    "isOnDevnet": true,
+    "website": "https://www.emelverse.xyz/collection/0x3979aabA987bA5AdBED66Fb7dBDf03f3a9e2cEe3",
+    "description": "",
+    "notes": "",
+    "contact": "tomurphy8",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Nad.fun",
+    "isOnDevnet": true,
+    "website": "https://devnet.nad.fun/",
+    "description": "pump.fun clone",
+    "notes": "",
+    "contact": "lilmatic",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Monad Ninja",
+    "isOnDevnet": true,
+    "website": "https://www.monadninja.xyz/",
+    "description": "",
+    "notes": "",
+    "contact": "@mayurrrr",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Lil Chogstars",
+    "isOnDevnet": true,
+    "website": "https://devnet.lilchogstars.com/",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "thisjiro",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Monadians",
+    "isOnDevnet": true,
+    "website": "https://monadianss.vercel.app/",
+    "description": "NFT Mint",
+    "notes": "",
+    "contact": "uday_04",
+    "relatedContractAddresses": []
+  },
+  {
+    "title": "Bounty Board",
+    "isOnDevnet": true,
+    "website": "https://bountyboard-web3.vercel.app/",
+    "description": "Bounty Board is a decentralized Web3 community engagement platform built on blockchain technology and ai-agent, aiming to automate task management and reward distribution, thereby increasing community participation and efficiency.",
+    "notes": "#RICKY-SHA0",
+    "contact": "rickyshao",
     "relatedContractAddresses": []
   }
 ]
