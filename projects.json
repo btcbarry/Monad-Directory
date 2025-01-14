@@ -550,5 +550,16 @@
     "notes": "#RICKY-SHA0",
     "contact": "rickyshao",
     "relatedContractAddresses": []
+  },
+  {
+    "title": "Test Project XYZ",
+    "isOnDevnet": false,
+    "website": "https://test-project.xyz",
+    "description": "A test project for Monad Directory submission verification",
+    "notes": "@testuser",
+    "contact": "test@example.com",
+    "relatedContractAddresses": [
+      "0x1234567890abcdef1234567890abcdef12345678"
+    ]
   }
 ]
