@@ -949,12 +949,11 @@
                     console.log('Fetching from GitHub...');
                     try {
                         response = await fetch(
-                            `https://raw.githubusercontent.com/btcbarry/Monad-Directory/main/projects.json?_=${Date.now()}`,
+                            'https://raw.githubusercontent.com/btcbarry/Monad-Directory/main/projects.json',
                             {
                                 cache: 'no-store',
                                 headers: {
-                                    'Cache-Control': 'no-cache',
-                                    'Pragma': 'no-cache'
+                                    'Cache-Control': 'no-cache'
                                 }
                             }
                         );
