@@ -18,6 +18,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            text-align: center;
         }
 
         h1 {
@@ -49,8 +50,8 @@
         .beta {
             font-size: 11px;
             position: relative;
-            top: -20px;
-            right: -5px;
+            top: 15px;
+            left: -4px;
             display: inline-block;
             color: white;
             -webkit-text-fill-color: white;
@@ -58,31 +59,48 @@
 
         .subtitle {
             text-align: center;
-            color: #888;
-            margin-bottom: 40px;
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 16px;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
+            gap: 40px;
+            margin: 50px 0;
             border-top: 1px solid #333;
             border-bottom: 1px solid #333;
-            padding: 25px 0;
+            padding: 35px 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         nav a {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            font-size: 18px;
-            padding: 8px 16px;
+            font-size: 20px;
+            padding: 4px 12px;
             transition: color 0.2s ease;
+            position: relative;
+            white-space: nowrap;
         }
 
         nav a:hover {
             color: #e040fb;
+        }
+
+        nav a:not(:last-child):after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 24px;
+            width: 1px;
+            background-color: #333;
         }
 
         .search-section {
@@ -222,43 +240,6 @@
             color: #ffff00;
         }
 
-        .contract-container {
-            position: absolute;
-            left: 24px;
-            right: 24px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .contract-address {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            color: #888;
-            flex-grow: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .copy-button {
-            background: transparent;
-            border: 1px solid #333;
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s ease;
-        }
-
-        .copy-button:hover {
-            border-color: #e040fb;
-            color: #e040fb;
-        }
-
         .timestamp-container {
             color: #666;
             font-size: 12px;
@@ -296,16 +277,10 @@
     </div>
 
     <script>
-        // Debug mode flag
-        const DEBUG = true;
-
-        // Global projects array
         let globalProjects = [];
 
-        // Updated DOMContentLoaded event listener with simplified fetch
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                // Show loading state
                 const projectsGrid = document.getElementById('projectsGrid');
                 projectsGrid.innerHTML = `
                     <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
@@ -313,77 +288,49 @@
                     </div>
                 `;
 
-                let response;
-                let source;
-
-                console.log('Fetching projects...');
-                try {
-                    response = await fetch('/projects.json');
-                    source = 'Vercel';
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const projects = await response.json();
-                    console.log('Projects loaded:', projects);
-                    
-                    if (!Array.isArray(projects)) {
-                        throw new Error('Invalid data format');
-                    }
-                    
-                    globalProjects = projects;
-                    
-                    // Sort projects alphabetically by default
-                    projects.sort((a, b) => {
-                        const titleA = a.title.toLowerCase();
-                        const titleB = b.title.toLowerCase();
-                        return titleA.localeCompare(titleB);
-                    });
-
-                    // Setup event listeners
-                    const searchInput = document.getElementById('searchInput');
-                    const projectFilter = document.getElementById('projectFilter');
-                    const sortButton = document.querySelector('.sort-button');
-
-                    if (searchInput && projectFilter) {
-                        searchInput.addEventListener('input', () => filterProjects());
-                        projectFilter.addEventListener('change', () => filterProjects());
-
-                        if (sortButton) {
-                            sortButton.addEventListener('click', () => {
-                                const isAscending = sortButton.textContent === '↑';
-                                sortButton.textContent = isAscending ? '↓' : '↑';
-                                
-                                const sortedProjects = [...projects].sort((a, b) => {
-                                    const titleA = a.title.toLowerCase();
-                                    const titleB = b.title.toLowerCase();
-                                    return isAscending 
-                                        ? titleB.localeCompare(titleA) 
-                                        : titleA.localeCompare(titleB);
-                                });
-                                
-                                renderProjects(sortedProjects);
-                            });
-                        }
-                    }
-
-                    renderProjects(projects);
-                    
-                } catch (error) {
-                    console.error('Fetch failed:', error);
-                    throw new Error(`Could not load projects file: ${error.message}`);
+                const response = await fetch('/projects.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
+                const projects = await response.json();
+                globalProjects = projects;
+
+                // Sort projects alphabetically by default
+                projects.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+
+                // Setup event listeners
+                const searchInput = document.getElementById('searchInput');
+                const projectFilter = document.getElementById('projectFilter');
+                const sortButton = document.querySelector('.sort-button');
+
+                searchInput.addEventListener('input', () => filterProjects());
+                projectFilter.addEventListener('change', () => filterProjects());
+                
+                if (sortButton) {
+                    sortButton.addEventListener('click', () => {
+                        const isAscending = sortButton.textContent === '↑';
+                        sortButton.textContent = isAscending ? '↓' : '↑';
+                        
+                        const sortedProjects = [...projects].sort((a, b) => {
+                            const titleA = a.title.toLowerCase();
+                            const titleB = b.title.toLowerCase();
+                            return isAscending 
+                                ? titleB.localeCompare(titleA) 
+                                : titleA.localeCompare(titleB);
+                        });
+                        
+                        renderProjects(sortedProjects);
+                    });
+                }
+
+                renderProjects(projects);
 
             } catch (error) {
                 console.error('Error:', error);
-                const projectsGrid = document.getElementById('projectsGrid');
                 projectsGrid.innerHTML = `
                     <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
                         <p style="color: #f44336;">Error loading projects: ${error.message}</p>
-                        <p style="color: #888; font-size: 14px; margin-top: 8px;">
-                            Please try refreshing the page. If the problem persists, contact support.
-                        </p>
                         <button onclick="location.reload()" style="
                             background: #e040fb;
                             border: none;
@@ -402,11 +349,6 @@
             const projectsGrid = document.getElementById('projectsGrid');
             projectsGrid.innerHTML = '';
             
-            if (!Array.isArray(projects)) {
-                console.error('Invalid projects data:', projects);
-                return;
-            }
-            
             projects.forEach(project => {
                 const card = document.createElement('div');
                 card.className = 'project-card';
@@ -414,44 +356,12 @@
                 const statusClass = project.isOnDevnet ? 'status-on-devnet' : 'status-not-on-devnet';
                 const statusText = project.isOnDevnet ? 'On Devnet' : 'Not Yet on Devnet';
                 
-                const descriptionHTML = project.description ? `
-                    <div class="description-container">
-                        <p class="project-description">${project.description}</p>
-                    </div>
-                ` : '';
-
-                const contractsHTML = project.contractAddresses && project.contractAddresses.length > 0 
-                    ? project.contractAddresses
-                        .slice(0, 3)
-                        .map((address, index) => `
-                            <div class="contract-container" style="bottom: ${108 + (index * 46)}px;">
-                                <code class="contract-address">${address}</code>
-                                <button class="copy-button" data-contract="${address}">Copy</button>
-                            </div>
-                        `).join('')
-                    : '';
-                
                 card.innerHTML = `
                     <h2 class="project-title">${project.title}</h2>
-                    ${descriptionHTML}
-                    ${contractsHTML}
+                    <p class="project-description">${project.description || ''}</p>
                     <a href="${project.website}" target="_blank" rel="noopener noreferrer" class="website-link">Website</a>
                     <div class="${statusClass}">${statusText}</div>
                 `;
-
-                const copyButtons = card.querySelectorAll('.copy-button');
-                copyButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const contractAddress = button.getAttribute('data-contract');
-                        navigator.clipboard.writeText(contractAddress).then(() => {
-                            const originalText = button.textContent;
-                            button.textContent = 'Copied!';
-                            setTimeout(() => {
-                                button.textContent = originalText;
-                            }, 2000);
-                        });
-                    });
-                });
                 
                 projectsGrid.appendChild(card);
             });
@@ -479,30 +389,26 @@
         // Update last modified date function
         async function updateLastModifiedDate() {
             try {
-                const response = await fetch(
-                    'https://api.github.com/repos/btcbarry/Monad-Directory/commits?path=public/projects.json&page=1&per_page=1'
-                );
-                
+                const response = await fetch('/projects.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
-                const data = await response.json();
-                if (!Array.isArray(data) || data.length === 0) {
-                    throw new Error('Invalid response format');
+                const lastModified = response.headers.get('last-modified');
+                if (lastModified) {
+                    const date = new Date(lastModified);
+                    const formattedDate = date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    document.getElementById('updateTimestamp').textContent = formattedDate;
+                } else {
+                    document.getElementById('updateTimestamp').textContent = 'Unknown';
                 }
-                
-                const [lastCommit] = data;
-                const date = new Date(lastCommit.commit.committer.date);
-                const formattedDate = ' ' + date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                });
-                document.getElementById('updateTimestamp').textContent = formattedDate;
             } catch (error) {
                 console.error('Error fetching last update date:', error);
-                document.getElementById('updateTimestamp').textContent = ' Unknown';
+                document.getElementById('updateTimestamp').textContent = 'Unknown';
             }
         }
 
