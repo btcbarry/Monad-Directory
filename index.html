@@ -952,18 +952,33 @@
                     console.log('Fetching from GitHub...');
                     try {
                         response = await fetch(
-                            'https://raw.githubusercontent.com/btcbarry/Monad-Directory/main/projects.json',
+                            'https://api.github.com/repos/btcbarry/Monad-Directory/contents/projects.json',
                             {
-                                cache: 'no-store',
                                 headers: {
-                                    'Cache-Control': 'no-cache'
+                                    'Accept': 'application/vnd.github.v3.raw'
                                 }
                             }
                         );
                         source = 'GitHub';
                     } catch (githubError) {
                         console.error('GitHub fetch failed:', githubError);
-                        throw new Error('Could not load projects from GitHub');
+                        
+                        // Fallback to raw URL if API fails
+                        try {
+                            response = await fetch(
+                                'https://raw.githubusercontent.com/btcbarry/Monad-Directory/main/projects.json',
+                                {
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Cache-Control': 'no-cache'
+                                    }
+                                }
+                            );
+                            source = 'GitHub Raw';
+                        } catch (rawError) {
+                            console.error('Raw GitHub fetch failed:', rawError);
+                            throw new Error('Could not load projects from GitHub');
+                        }
                     }
                 }
 
