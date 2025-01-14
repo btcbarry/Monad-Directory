@@ -916,7 +916,10 @@
         // Initialize event manager
         const eventManager = new EventManager();
 
-        // Single event listener for initialization
+        // Add this at the top of your script section
+        let globalProjects = [];
+
+        // Modify the first DOMContentLoaded listener to store projects globally
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 // Show loading state
@@ -971,6 +974,7 @@
                 console.log(`Successfully fetched from ${source}`);
                 
                 let projects = await response.json();
+                globalProjects = projects; // Store globally
                 
                 // Validate data
                 if (!Array.isArray(projects)) {
@@ -995,8 +999,17 @@
                 const sortButton = document.querySelector('.sort-button');
 
                 if (searchInput && projectFilter) {
-                    searchInput.addEventListener('input', () => filterProjects(projects));
-                    projectFilter.addEventListener('change', () => filterProjects(projects));
+                    // Remove any existing listeners
+                    searchInput.replaceWith(searchInput.cloneNode(true));
+                    projectFilter.replaceWith(projectFilter.cloneNode(true));
+                    
+                    // Get fresh references
+                    const newSearchInput = document.getElementById('searchInput');
+                    const newProjectFilter = document.getElementById('projectFilter');
+                    
+                    // Add new listeners
+                    newSearchInput.addEventListener('input', () => filterProjects());
+                    newProjectFilter.addEventListener('change', () => filterProjects());
 
                     if (sortButton) {
                         sortButton.addEventListener('click', () => {
@@ -1099,7 +1112,7 @@
             });
         }
 
-        function filterProjects(projects) {
+        function filterProjects(projects = globalProjects) {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const filterValue = document.getElementById('projectFilter').value;
             
@@ -1291,55 +1304,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             // ... existing code ...
             updateLastModifiedDate();  // Call the function when page loads
-        });
-
-        async function fetchProjects() {
-            const isDevelopment = window.location.hostname === 'localhost';
-            let response, source;
-
-            try {
-                // Use the GitHub API instead of raw.githubusercontent.com
-                const apiUrl = 'https://api.github.com/repos/btcbarry/Monad-Directory/contents/projects.json';
-                response = await fetch(apiUrl);
-                const data = await response.json();
-                
-                // Decode the content from base64
-                const content = atob(data.content);
-                return JSON.parse(content);
-            } catch (error) {
-                console.error('Error fetching projects:', error);
-                throw new Error('Could not load projects from GitHub');
-            }
-        }
-
-        // Update the projects loading section:
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const projects = await fetchProjects();
-                renderProjects(projects);
-            } catch (error) {
-                console.error('Error loading projects:', error);
-                const projectsGrid = document.getElementById('projectsGrid');
-                if (projectsGrid) {
-                    projectsGrid.innerHTML = `
-                        <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                            <p style="color: #f44336;">Error loading projects: ${error.message}</p>
-                            <p style="color: #888; font-size: 14px; margin-top: 8px;">
-                                Please try refreshing the page. If the problem persists, contact support.
-                            </p>
-                            <button onclick="location.reload()" style="
-                                background: #e040fb;
-                                border: none;
-                                color: white;
-                                padding: 8px 16px;
-                                border-radius: 4px;
-                                margin-top: 16px;
-                                cursor: pointer;
-                            ">Try Again</button>
-                        </div>
-                    `;
-                }
-            }
         });
     </script>
 </body>
