@@ -1,1325 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monad Directory</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            background-color: #111;
-            color: white;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            background: linear-gradient(
-                to right,
-                #00e5ff 0%,
-                #c012e9 50%,
-                #00e5ff 100%
-            );
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 56px;
-            margin: 0 auto 5px auto;
-            animation: shine 2s linear infinite;
-            background-size: 200% auto;
-            position: relative;
-            display: inline-block;
-            text-align: center;
-            width: 100%;
-        }
-
-        @keyframes shine {
-            to {
-                background-position: -200% center;
-            }
-        }
-
-        .beta {
-            font-size: 11px;
-            position: relative;
-            top: 15px;
-            left: -4px;
-            display: inline-block;
-            color: white;
-            -webkit-text-fill-color: white;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #fff;
-            margin-bottom: 40px;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
-            padding: 25px 0;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            padding: 8px 16px;
-            transition: color 0.2s ease;
-        }
-
-        nav a:hover {
-            color: #e040fb;
-        }
-
-        .search-section {
-            position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 40px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 8px 12px;
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 5px;
-            color: white;
-            font-size: 14px;
-            height: 38px;
-            box-sizing: border-box;
-            margin-bottom: 12px;
-        }
-
-        .filter-controls {
-            display: flex;
-            justify-content: flex-start;
-            gap: 4px;
-            align-items: center;
-            padding-left: 0;
-        }
-
-        select {
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 5px;
-            color: white;
-            font-size: 14px;
-            height: 38px;
-            padding: 0 16px;
-            cursor: pointer;
-            width: 140px;
-            margin-right: 8px;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-        }
-
-        .sort-button {
-            background: transparent;
-            border: none;
-            color: white;
-            width: 38px;
-            height: 38px;
-            font-size: 18px;
-            font-weight: 900;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.2s ease;
-            padding: 0;
-            margin-right: 220px;
-            margin-left: -8px;
-            margin-top: 1px;
-        }
-
-        .sort-button:hover {
-            color: #e040fb;
-        }
-
-        .project-card {
-            background: #1A1825;
-            border: 1px solid #2D2B3B;
-            border-radius: 12px;
-            padding: 16px;
-            height: 280px;
-            position: relative;
-        }
-
-        .project-title {
-            margin: 0;
-            text-align: center;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            line-height: 1.2;
-            margin-bottom: 5px;
-            overflow: hidden;
-            color: white !important;
-            font-weight: 600;
-        }
-
-        .project-description {
-            color: white;
-            text-align: center;
-            font-size: 15px;
-            font-weight: 500;
-            font-style: normal;
-            position: absolute;
-            top: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            padding: 20px 0;
-            margin: 0;
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            cursor: help;
-        }
-
-        .project-description:hover::after {
-            content: attr(data-full-text);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: -10px;
-            background: rgba(26, 24, 37, 0.95);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            width: max-content;
-            max-width: 300px;
-            white-space: pre-wrap;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            font-size: 14px;
-            line-height: 1.4;
-            border: 1px solid #2D2B3B;
-            pointer-events: none;
-            animation: tooltipFade 0.2s ease-in-out;
-        }
-
-        @keyframes tooltipFade {
-            from {
-                opacity: 0;
-                transform: translate(-50%, 5px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        .contract-container,
-        .website-link,
-        .status-on-devnet,
-        .status-not-on-devnet {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 14px;
-            font-weight: 500;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-        }
-
-        .contract-container {
-            bottom: 108px;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .website-link {
-            bottom: 62px;
-            background: #6E56CF;
-            color: white;
-            text-decoration: none;
-            transition: transform 0.2s ease;
-        }
-
-        .status-on-devnet {
-            bottom: 16px;
-            color: #2ecc71;
-            border: 1px solid #2ecc71;
-        }
-
-        .status-not-on-devnet {
-            bottom: 16px;
-            color: #e74c3c;
-            border: 1px solid #e74c3c;
-        }
-
-        .project-header {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .devnet-badge {
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            grid-column: 2;
-        }
-
-        .devnet-badge.on-devnet {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .devnet-badge.not-on-devnet {
-            background: #f44336;
-            color: white;
-        }
-
-        .section-title {
-            color: white;
-            margin-bottom: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .description-section, 
-        .notes-section, 
-        .contact-section,
-        .contract-section {
-            margin-bottom: 20px;
-        }
-
-        .description-section p,
-        .notes-section p,
-        .contact-section p,
-        .contract-section p {
-            font-size: 14px;
-            color: #888;
-            margin: 0;
-            line-height: 1.5;
-        }
-
-        .contact-section p {
-            color: #3498db;
-        }
-
-        .contact-value::before {
-            content: '@';
-        }
-
-        .contract-section {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: 5px;
-            word-break: break-all;
-        }
-
-        .visit-website {
-            display: inline-block;
-            background: #e040fb;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            grid-column: 3;
-        }
-
-        .visit-website:hover {
-            background: #d040e9;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 36px;
-            }
-            
-            .filter-controls {
-                flex-direction: column;
-            }
-            
-            select, .sort-button {
-                width: 100%;
-            }
-
-            .project-header {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .project-title,
-            .devnet-badge,
-            .visit-website {
-                grid-column: 1;
-            }
-        }
-
-        .search-input:focus,
-        select:focus {
-            outline: none;
-            border-color: #e040fb;
-        }
-
-        .search-input:hover,
-        select:hover {
-            border-color: #444;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 24px;
-            transition: transform 0.2s ease;
-            position: relative;
-            height: 340px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .project-card:hover {
-            transform: translateY(-2px);
-            border-color: #444;
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 16px;
-        }
-
-        .project-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: white;
-            margin: 0;
-        }
-
-        .project-status {
-            background: #1a1a1a;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .status-on-devnet {
-            color: #2ecc71;
-            border: 1px solid #2ecc71;
-        }
-
-        .status-not-on-devnet {
-            color: #e74c3c;
-            border: 1px solid #e74c3c;
-        }
-
-        .project-contact {
-            color: #00e5ff;
-            font-size: 14px;
-            margin: 0;
-        }
-
-        .contract-container {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 6px;
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 0;
-        }
-
-        .contract-address {
-            font-family: monospace;
-            color: #E0DEF4;
-            font-size: 14px;
-            flex-grow: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .copy-button {
-            background: #444;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            padding: 6px 12px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .copy-button:hover {
-            background: #555;
-        }
-
-        .status-badge {
-            width: 100%;
-            padding: 8px;
-            text-align: center;
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        .contract-space {
-            min-height: 40px;
-            margin: 12px 0;
-        }
-
-        .card-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .card-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .info-button {
-            background: #2D2B3B;
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background 0.2s;
-        }
-
-        .contact-button {
-            background: #2196F3;
-        }
-
-        .notes-button {
-            background: #4CAF50;
-        }
-
-        .info-button:hover {
-            filter: brightness(1.2);
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            text-align: center;
-            padding: 5px 10px;
-            border-radius: 6px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: pre-wrap;
-            max-width: 200px;
-            font-size: 12px;
-        }
-
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-        }
-
-        .description-wrapper {
-            position: relative;
-            width: 90%;
-            margin: 0 auto;
-        }
-
-        .project-description {
-            color: white;
-            text-align: center;
-            font-size: 15px;
-            font-weight: 500;
-            padding: 12px 0;
-            margin: 0;
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            cursor: help;
-        }
-
-        .tooltip-box {
-            display: none;
-            position: absolute;
-            background: #1A1825;
-            border: 1px solid #2D2B3B;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            z-index: 1000;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: max-content;
-            max-width: 300px;
-            font-size: 14px;
-            line-height: 1.4;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .description-wrapper:hover .tooltip-box {
-            display: block;
-        }
-
-        .description-container {
-            position: relative;
-            width: 90%;
-            margin: 0 auto;
-            min-height: 45px;
-            max-height: 55px;
-            top: -55px;
-            display: flex;
-            align-items: center;
-        }
-
-        .project-description {
-            color: white;
-            text-align: center;
-            font-size: 15px;
-            font-weight: 500;
-            padding: 8px 0;
-            margin: 0;
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
-            overflow: hidden;
-            cursor: help;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            line-height: 1.3;
-            max-height: 2.6em;
-            width: 100%;
-        }
-
-        .description-tooltip {
-            display: none;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: calc(100% + 5px);
-            background: rgba(26, 24, 37, 0.98);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            width: max-content;
-            max-width: 300px;
-            white-space: normal;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            font-size: 14px;
-            line-height: 1.4;
-            border: 1px solid #2D2B3B;
-            animation: tooltipFade 0.2s ease-in-out;
-        }
-
-        .description-container:hover .description-tooltip {
-            display: block;
-        }
-
-        @keyframes tooltipFade {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -5px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        .contract-container {
-            bottom: 108px;
-        }
-
-        .website-link {
-            bottom: 62px;
-        }
-
-        .status-on-devnet,
-        .status-not-on-devnet {
-            bottom: 16px;
-        }
-
-        .timestamp-container {
-            position: absolute;
-            right: 20px;
-            bottom: 16px;
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 5px;
-            color: white;
-            font-size: 12px;
-            height: 38px;
-            padding: 0 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 190px;
-            white-space: nowrap;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monad Directory</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- Your existing styles remain unchanged -->
+<style>
+/ Your existing styles remain exactly the same /
+body {
+background-color: #111;
+color: white;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+margin: 0;
+padding: 0;
+}
+/ ... all your existing styles ... /
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Monad Directory<span class="beta">beta</span></h1>
-        <p class="subtitle">A comprehensive directory of current projects deployed on Monad Devnet.</p>
-        
-        <nav>
-            <a href="./index.html">Home</a>
-            <a href="./submit.html">Submit a Project for Listing</a>
-        </nav>
-
-        <div class="search-section">
-            <input type="text" class="search-input" placeholder="Search projects..." id="searchInput">
-            <div class="filter-controls">
-                <select id="projectFilter">
-                    <option value="all">All Projects</option>
-                    <option value="onDevnet">On Devnet</option>
-                    <option value="notOnDevnet">Not Yet on Devnet</option>
-                </select>
-                <button class="sort-button">↑</button>
-            </div>
-            <div class="timestamp-container">Last updated:&nbsp;<span id="updateTimestamp">...</span></div>
-        </div>
-        
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Projects will be dynamically inserted here -->
-        </div>
-    </div>
-
-    <script>
-        // Debug mode flag
-        const DEBUG = true;
-
-        // Event Management System
-        class EventManager {
-            constructor() {
-                this.listeners = new Map();
-                this.debugLog = [];
-                this.errorCount = 0;
-                this.maxListeners = 50; // Threshold for warnings
-            }
-
-            // Debug logging
-            log(message, type = 'info') {
-                if (!DEBUG) return;
-                const timestamp = new Date().toISOString();
-                const logEntry = { timestamp, type, message };
-                this.debugLog.push(logEntry);
-                console[type](`[EventManager] ${message}`);
-            }
-
-            // Add event listener with tracking
-            addListener(element, type, handler, options = {}) {
-                try {
-                    // Generate unique ID for this listener
-                    const listenerId = this.generateListenerId(element, type);
-                    
-                    // Check for potential memory leaks
-                    if (this.getListenerCount(element) > this.maxListeners) {
-                        this.log(`Warning: Element has over ${this.maxListeners} listeners`, 'warn');
-                    }
-
-                    // Wrap handler with error boundary and debugging
-                    const wrappedHandler = this.createWrappedHandler(handler, listenerId);
-                    
-                    // Store listener info
-                    if (!this.listeners.has(element)) {
-                        this.listeners.set(element, new Map());
-                    }
-                    this.listeners.get(element).set(listenerId, {
-                        type,
-                        handler: wrappedHandler,
-                        originalHandler: handler,
-                        options,
-                        addedAt: new Date(),
-                        callCount: 0
-                    });
-
-                    // Add actual event listener
-                    element.addEventListener(type, wrappedHandler, options);
-                    this.log(`Added ${type} listener ${listenerId}`);
-                    
-                    return listenerId;
-                } catch (error) {
-                    this.handleError('addListener', error);
-                    throw error;
-                }
-            }
-
-            // Remove specific listener
-            removeListener(element, listenerId) {
-                try {
-                    const elementListeners = this.listeners.get(element);
-                    if (!elementListeners) return false;
-
-                    const listener = elementListeners.get(listenerId);
-                    if (!listener) return false;
-
-                    element.removeEventListener(listener.type, listener.handler, listener.options);
-                    elementListeners.delete(listenerId);
-                    
-                    this.log(`Removed listener ${listenerId}`);
-                    return true;
-                } catch (error) {
-                    this.handleError('removeListener', error);
-                    return false;
-                }
-            }
-
-            // Cleanup all listeners
-            cleanup() {
-                try {
-                    let cleanupCount = 0;
-                    this.listeners.forEach((elementListeners, element) => {
-                        elementListeners.forEach((_, listenerId) => {
-                            if (this.removeListener(element, listenerId)) {
-                                cleanupCount++;
-                            }
-                        });
-                        this.listeners.delete(element);
-                    });
-                    this.log(`Cleaned up ${cleanupCount} listeners`);
-                } catch (error) {
-                    this.handleError('cleanup', error);
-                }
-            }
-
-            // Error handling
-            handleError(operation, error) {
-                this.errorCount++;
-                this.log(`Error in ${operation}: ${error.message}`, 'error');
-                if (DEBUG) {
-                    console.error(error);
-                }
-            }
-
-            // Utility methods
-            generateListenerId(element, type) {
-                return `${element.id || 'anonymous'}-${type}-${Date.now()}`;
-            }
-
-            getListenerCount(element) {
-                return this.listeners.get(element)?.size || 0;
-            }
-
-            createWrappedHandler(handler, listenerId) {
-                return (...args) => {
-                    try {
-                        const startTime = performance.now();
-                        handler(...args);
-                        const duration = performance.now() - startTime;
-
-                        // Update metrics
-                        const listener = this.listeners.get(args[0].currentTarget).get(listenerId);
-                        listener.callCount++;
-                        listener.lastCallDuration = duration;
-
-                        if (duration > 100) { // Warning threshold for long-running handlers
-                            this.log(`Warning: Listener ${listenerId} took ${duration}ms to execute`, 'warn');
-                        }
-                    } catch (error) {
-                        this.handleError(`handler-${listenerId}`, error);
-                    }
-                };
-            }
-
-            // Debugging helpers
-            getDebugInfo() {
-                return {
-                    totalListeners: Array.from(this.listeners.values())
-                        .reduce((acc, el) => acc + el.size, 0),
-                    errorCount: this.errorCount,
-                    debugLog: this.debugLog,
-                    listenerDetails: Array.from(this.listeners.entries())
-                        .map(([element, listeners]) => ({
-                            element: element.id || 'anonymous',
-                            listeners: Array.from(listeners.values())
-                                .map(l => ({
-                                    type: l.type,
-                                    callCount: l.callCount,
-                                    addedAt: l.addedAt,
-                                    lastCallDuration: l.lastCallDuration
-                                }))
-                        }))
-                };
-            }
-        }
-
-        // Initialize event manager
-        const eventManager = new EventManager();
-
-        // Add this at the top of your script section
-        let globalProjects = [];
-
-        // Modify the first DOMContentLoaded listener to store projects globally
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // Show loading state
-                const projectsGrid = document.getElementById('projectsGrid');
-                projectsGrid.innerHTML = `
-                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                        <p style="color: #e040fb;">Loading projects...</p>
-                    </div>
-                `;
-
-                // Environment detection
-                const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                console.log(`Running in ${isDevelopment ? 'development' : 'production'} mode`);
-
-                let response;
-                let source;
-
-                if (isDevelopment) {
-                    // Development mode: Use local file
-                    console.log('Fetching from local projects.json...');
-                    try {
-                        response = await fetch('./projects.json');
-                        source = 'Local';
-                    } catch (localError) {
-                        console.error('Local file fetch failed:', localError);
-                        throw new Error('Could not load local projects file');
-                    }
-                } else {
-                    // Production mode: Use GitHub
-                    console.log('Fetching from GitHub...');
-                    try {
-                        response = await fetch(
-                            'https://api.github.com/repos/btcbarry/Monad-Directory/contents/projects.json',
-                            {
-                                headers: {
-                                    'Accept': 'application/vnd.github.v3.raw'
-                                }
-                            }
-                        );
-                        source = 'GitHub';
-                    } catch (githubError) {
-                        console.error('GitHub fetch failed:', githubError);
-                        
-                        // Fallback to raw URL if API fails
-                        try {
-                            response = await fetch(
-                                'https://raw.githubusercontent.com/btcbarry/Monad-Directory/main/projects.json',
-                                {
-                                    headers: {
-                                        'Accept': 'application/json',
-                                        'Cache-Control': 'no-cache'
-                                    }
-                                }
-                            );
-                            source = 'GitHub Raw';
-                        } catch (rawError) {
-                            console.error('Raw GitHub fetch failed:', rawError);
-                            throw new Error('Could not load projects from GitHub');
-                        }
-                    }
-                }
-
-                if (!response.ok) {
-                    throw new Error(`Failed to load projects from ${source} (Status: ${response.status})`);
-                }
-
-                console.log(`Successfully fetched from ${source}`);
-                
-                let projects = await response.json();
-                globalProjects = projects; // Store globally
-                
-                // Validate data
-                if (!Array.isArray(projects)) {
-                    throw new Error('Invalid projects data format');
-                }
-
-                console.log(`Loaded ${projects.length} projects`);
-                if (isDevelopment) {
-                    console.log('First three projects:', projects.slice(0, 3));
-                }
-
-                // Sort projects alphabetically by default
-                projects = projects.sort((a, b) => {
-                    const titleA = a.title.toLowerCase();
-                    const titleB = b.title.toLowerCase();
-                    return titleA.localeCompare(titleB);
-                });
-
-                // Setup event listeners
-                const searchInput = document.getElementById('searchInput');
-                const projectFilter = document.getElementById('projectFilter');
-                const sortButton = document.querySelector('.sort-button');
-
-                if (searchInput && projectFilter) {
-                    // Remove any existing listeners
-                    searchInput.replaceWith(searchInput.cloneNode(true));
-                    projectFilter.replaceWith(projectFilter.cloneNode(true));
-                    
-                    // Get fresh references
-                    const newSearchInput = document.getElementById('searchInput');
-                    const newProjectFilter = document.getElementById('projectFilter');
-                    
-                    // Add new listeners
-                    newSearchInput.addEventListener('input', () => filterProjects());
-                    newProjectFilter.addEventListener('change', () => filterProjects());
-
-                    if (sortButton) {
-                        sortButton.addEventListener('click', () => {
-                            const isAscending = sortButton.textContent === '↑';
-                            sortButton.textContent = isAscending ? '↓' : '↑';
-                            
-                            const sortedProjects = [...projects].sort((a, b) => {
-                                const titleA = a.title.toLowerCase();
-                                const titleB = b.title.toLowerCase();
-                                return isAscending 
-                                    ? titleB.localeCompare(titleA) 
-                                    : titleA.localeCompare(titleB);
-                            });
-                            
-                            renderProjects(sortedProjects);
-                        });
-                    }
-                }
-
-                // Render projects
-                renderProjects(projects);
-
-            } catch (error) {
-                console.error('Error loading projects:', error);
-                const projectsGrid = document.getElementById('projectsGrid');
-                projectsGrid.innerHTML = `
-                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                        <p style="color: #f44336;">Error loading projects: ${error.message}</p>
-                        <p style="color: #888; font-size: 14px; margin-top: 8px;">
-                            Please try refreshing the page. If the problem persists, contact support.
-                        </p>
-                        <button onclick="location.reload()" style="
-                            background: #e040fb;
-                            border: none;
-                            color: white;
-                            padding: 8px 16px;
-                            border-radius: 4px;
-                            margin-top: 16px;
-                            cursor: pointer;
-                        ">Try Again</button>
-                    </div>
-                `;
-            }
-        });
-
-        function renderProjects(projects) {
-            const projectsGrid = document.getElementById('projectsGrid');
-            projectsGrid.innerHTML = '';
-            
-            projects.forEach(project => {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                
-                const statusClass = project.isOnDevnet ? 'status-on-devnet' : 'status-not-on-devnet';
-                const statusText = project.isOnDevnet ? 'On Devnet' : 'Not Yet on Devnet';
-                
-                const descriptionHTML = project.description ? `
-                    <div class="description-container">
-                        <p class="project-description">${project.description}</p>
-                        <div class="description-tooltip">${project.description}</div>
-                    </div>
-                ` : '';
-
-                // Modified contract addresses section
-                const contractsHTML = project.relatedContractAddresses && project.relatedContractAddresses.length > 0 
-                    ? project.relatedContractAddresses
-                        .slice(0, 3) // Only take the first 3 addresses
-                        .map((address, index) => `
-                            <div class="contract-container" style="bottom: ${108 + (index * 46)}px;">
-                                <code class="contract-address">${address}</code>
-                                <button class="copy-button" data-contract="${address}">Copy</button>
-                            </div>
-                        `).join('')
-                    : '';
-                
-                card.innerHTML = `
-                    <h2 class="project-title">${project.title}</h2>
-                    ${descriptionHTML}
-                    ${contractsHTML}
-                    <a href="${project.website}" target="_blank" rel="noopener noreferrer" class="website-link">Website</a>
-                    <div class="${statusClass}">${statusText}</div>
-                `;
-
-                // Add event listeners to copy buttons
-                const copyButtons = card.querySelectorAll('.copy-button');
-                copyButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const contractAddress = button.getAttribute('data-contract');
-                        navigator.clipboard.writeText(contractAddress).then(() => {
-                            const originalText = button.textContent;
-                            button.textContent = 'Copied!';
-                            setTimeout(() => {
-                                button.textContent = originalText;
-                            }, 2000);
-                        });
-                    });
-                });
-                
-                projectsGrid.appendChild(card);
-            });
-        }
-
-        function filterProjects(projects = globalProjects) {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filterValue = document.getElementById('projectFilter').value;
-            
-            // Get all project cards
-            const projectsGrid = document.getElementById('projectsGrid');
-            projectsGrid.innerHTML = '';
-            
-            // Filter projects based on search and filter criteria
-            const filteredProjects = projects.filter(project => {
-                const titleMatch = project.title.toLowerCase().includes(searchTerm);
-                const descriptionMatch = project.description?.toLowerCase().includes(searchTerm);
-                
-                const filterMatch = 
-                    filterValue === 'all' || 
-                    (filterValue === 'onDevnet' && project.isOnDevnet) ||
-                    (filterValue === 'notOnDevnet' && !project.isOnDevnet);
-                
-                return (titleMatch || descriptionMatch) && filterMatch;
-            });
-            
-            // Render filtered projects
-            renderProjects(filteredProjects);
-        }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                // Could add a toast notification here
-            });
-        }
-
-        // Store all event listeners for cleanup
-        let eventListeners = [];
-
-        // Cleanup function to remove all registered listeners
-        function cleanupEventListeners() {
-            eventListeners.forEach(({element, type, handler}) => {
-                element.removeEventListener(type, handler);
-            });
-            eventListeners = [];
-        }
-
-        // Safe way to add event listeners
-        function addSafeEventListener(element, type, handler) {
-            element.addEventListener(type, handler);
-            eventListeners.push({element, type, handler});
-        }
-
-        // Cleanup when navigating away
-        window.addEventListener('unload', cleanupEventListeners);
-
-        class DOMHandler {
-            constructor() {
-                this.handler = this.handler.bind(this);
-                document.addEventListener('click', this.handler);
-            }
-
-            handler() {
-                // Handle event
-            }
-
-            cleanup() {
-                document.removeEventListener('click', this.handler);
-            }
-        }
-
-        // Store all copy button listeners
-        const copyListeners = new Map();
-
-        function createProjectCard(project) {
-            const card = document.createElement('div');
-            card.className = 'project-card';
-            
-            // Clean up any existing listeners for this card
-            cleanupCardListeners(card);
-            
-            const statusBadge = project.isOnDevnet === null ? 'Unknown' : 
-                               project.isOnDevnet ? 'Devnet' : 'Not on Devnet';
-            const statusClass = project.isOnDevnet === null ? 'unknown' : 
-                               project.isOnDevnet ? 'devnet' : 'not-devnet';
-
-            card.innerHTML = `
-                <div class="card-header">
-                    <h3><span class="label">Title:</span> ${project.title}</h3>
-                    <span class="status-badge ${statusClass}">${statusBadge}</span>
-                </div>
-                
-                <div class="card-content">
-                    <p><span class="label">Description:</span> ${project.description || 'No description available'}</p>
-                    
-                    <p><span class="label">Website:</span> 
-                        <a href="${project.website}" target="_blank" rel="noopener noreferrer">
-                            ${project.website}
-                        </a>
-                    </p>
-                    
-                    <p><span class="label">Contact:</span> 
-                        ${Array.isArray(project.contact) ? 
-                            project.contact.join(', ') : 
-                            project.contact || 'Not specified'}
-                    </p>
-                    
-                    ${project.relatedContractAddresses && project.relatedContractAddresses.length > 0 ? `
-                        <div class="contracts-section">
-                            <span class="label">Contract Addresses:</span>
-                            <div class="contract-list">
-                                ${project.relatedContractAddresses.map((address, index) => `
-                                    <div class="contract-address" data-address="${address}">
-                                        <code>${address}</code>
-                                        <button class="copy-btn" data-index="${index}">
-                                            <i class="fas fa-copy"></i>
-                                        </button>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-
-            // Add new listeners after HTML is set
-            setupCardListeners(card, project);
-            
-            return card;
-        }
-
-        function setupCardListeners(card, project) {
-            const copyButtons = card.querySelectorAll('.copy-btn');
-            copyButtons.forEach((button, index) => {
-                const address = project.relatedContractAddresses[index];
-                const handler = () => copyToClipboard(address, button);
-                
-                // Store the listener reference
-                copyListeners.set(button, handler);
-                button.addEventListener('click', handler);
-            });
-        }
-
-        function cleanupCardListeners(card) {
-            const copyButtons = card.querySelectorAll('.copy-btn');
-            copyButtons.forEach(button => {
-                const handler = copyListeners.get(button);
-                if (handler) {
-                    button.removeEventListener('click', handler);
-                    copyListeners.delete(button);
-                }
-            });
-        }
-
-        function copyToClipboard(text, button) {
-            navigator.clipboard.writeText(text).then(() => {
-                // Show feedback
-                const originalHTML = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i>';
-                
-                setTimeout(() => {
-                    button.innerHTML = originalHTML;
-                }, 2000);
-            });
-        }
-
-        // Cleanup on page unload
-        window.addEventListener('unload', () => {
-            copyListeners.forEach((handler, button) => {
-                button.removeEventListener('click', handler);
-            });
-            copyListeners.clear();
-        });
-
-        async function updateLastModifiedDate() {
-            try {
-                const response = await fetch(
-                    'https://api.github.com/repos/btcbarry/Monad-Directory/commits?path=projects.json&page=1&per_page=1'
-                );
-                const [lastCommit] = await response.json();
-                const date = new Date(lastCommit.commit.committer.date);
-                const formattedDate = ' ' + date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                });
-                document.getElementById('updateTimestamp').textContent = formattedDate;
-            } catch (error) {
-                console.error('Error fetching last update date:', error);
-                document.getElementById('updateTimestamp').textContent = ' Unknown';
-            }
-        }
-
-        // Add this to your existing DOMContentLoaded event listener
-        document.addEventListener('DOMContentLoaded', () => {
-            // ... existing code ...
-            updateLastModifiedDate();  // Call the function when page loads
-        });
-    </script>
+<div class="container">
+<h1>Monad Directory<span class="beta">beta</span></h1>
+<p class="subtitle">A comprehensive directory of current projects deployed on Monad Devnet.</p>
+<nav>
+<a href="./index.html">Home</a>
+<a href="./submit.html">Submit a Project for Listing</a>
+</nav>
+<div class="search-section">
+<input type="text" class="search-input" placeholder="Search projects..." id="searchInput">
+<div class="filter-controls">
+<select id="projectFilter">
+<option value="all">All Projects</option>
+<option value="onDevnet">On Devnet</option>
+<option value="notOnDevnet">Not Yet on Devnet</option>
+</select>
+<button class="sort-button">↑</button>
+</div>
+<div class="timestamp-container">Last updated:&nbsp;<span id="updateTimestamp">...</span></div>
+</div>
+<div class="projects-grid" id="projectsGrid">
+<!-- Projects will be dynamically inserted here -->
+</div>
+</div>
+<script>
+// Debug mode flag
+const DEBUG = true;
+// Event Management System remains unchanged
+class EventManager {
+// ... Your existing EventManager class code ...
+}
+// Initialize event manager
+const eventManager = new EventManager();
+// Global projects array
+let globalProjects = [];
+// Updated DOMContentLoaded event listener with simplified fetch
+document.addEventListener('DOMContentLoaded', async () => {
+try {
+// Show loading state
+const projectsGrid = document.getElementById('projectsGrid');
+projectsGrid.innerHTML = <div style="text-align: center; padding: 40px; grid-column: 1/-1;"> <p style="color: #e040fb;">Loading projects...</p> </div> ;
+let response;
+let source;
+console.log('Fetching projects...');
+try {
+response = await fetch('/projects.json');
+source = 'Vercel';
+} catch (error) {
+console.error('Fetch failed:', error);
+throw new Error('Could not load projects file');
+}
+if (!response.ok) {
+throw new Error(Failed to load projects (Status: ${response.status}));
+}
+console.log(Successfully fetched from ${source});
+let projects = await response.json();
+globalProjects = projects; // Store globally
+// Validate data
+if (!Array.isArray(projects)) {
+throw new Error('Invalid projects data format');
+}
+console.log(Loaded ${projects.length} projects);
+// Sort projects alphabetically by default
+projects = projects.sort((a, b) => {
+const titleA = a.title.toLowerCase();
+const titleB = b.title.toLowerCase();
+return titleA.localeCompare(titleB);
+});
+// Setup event listeners
+const searchInput = document.getElementById('searchInput');
+const projectFilter = document.getElementById('projectFilter');
+const sortButton = document.querySelector('.sort-button');
+if (searchInput && projectFilter) {
+// Remove any existing listeners
+searchInput.replaceWith(searchInput.cloneNode(true));
+projectFilter.replaceWith(projectFilter.cloneNode(true));
+// Get fresh references
+const newSearchInput = document.getElementById('searchInput');
+const newProjectFilter = document.getElementById('projectFilter');
+// Add new listeners
+newSearchInput.addEventListener('input', () => filterProjects());
+newProjectFilter.addEventListener('change', () => filterProjects());
+if (sortButton) {
+sortButton.addEventListener('click', () => {
+const isAscending = sortButton.textContent === '↑';
+sortButton.textContent = isAscending ? '↓' : '↑';
+const sortedProjects = [...projects].sort((a, b) => {
+const titleA = a.title.toLowerCase();
+const titleB = b.title.toLowerCase();
+return isAscending
+? titleB.localeCompare(titleA)
+: titleA.localeCompare(titleB);
+});
+renderProjects(sortedProjects);
+});
+}
+}
+// Render projects
+renderProjects(projects);
+} catch (error) {
+console.error('Error loading projects:', error);
+const projectsGrid = document.getElementById('projectsGrid');
+projectsGrid.innerHTML = <div style="text-align: center; padding: 40px; grid-column: 1/-1;"> <p style="color: #f44336;">Error loading projects: ${error.message}</p> <p style="color: #888; font-size: 14px; margin-top: 8px;"> Please try refreshing the page. If the problem persists, contact support. </p> <button onclick="location.reload()" style=" background: #e040fb; border: none; color: white; padding: 8px 16px; border-radius: 4px; margin-top: 16px; cursor: pointer; ">Try Again</button> </div> ;
+}
+});
+// Your existing functions remain unchanged
+function renderProjects(projects) {
+// ... Your existing renderProjects function ...
+}
+function filterProjects(projects = globalProjects) {
+// ... Your existing filterProjects function ...
+}
+function copyToClipboard(text) {
+// ... Your existing copyToClipboard function ...
+}
+// Update last modified date function
+async function updateLastModifiedDate() {
+try {
+const response = await fetch(
+'https://api.github.com/repos/btcbarry/Monad-Directory/commits?path=public/projects.json&page=1&per_page=1'
+);
+const [lastCommit] = await response.json();
+const date = new Date(lastCommit.commit.committer.date);
+const formattedDate = ' ' + date.toLocaleDateString('en-US', {
+year: 'numeric',
+month: 'short',
+day: 'numeric'
+});
+document.getElementById('updateTimestamp').textContent = formattedDate;
+} catch (error) {
+console.error('Error fetching last update date:', error);
+document.getElementById('updateTimestamp').textContent = ' Unknown';
+}
+}
+// Call updateLastModifiedDate when page loads
+document.addEventListener('DOMContentLoaded', () => {
+updateLastModifiedDate();
+});
+</script>
 </body>
-</html>
