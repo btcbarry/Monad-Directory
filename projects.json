@@ -550,27 +550,5 @@
     "notes": "#RICKY-SHA0",
     "contact": "rickyshao",
     "relatedContractAddresses": []
-  },
-  {
-    "title": "Test Project XYZ",
-    "isOnDevnet": false,
-    "website": "https://test-project.xyz",
-    "description": "A test project for Monad Directory submission verification",
-    "notes": "@testuser",
-    "contact": "test@example.com",
-    "relatedContractAddresses": [
-      "0x1234567890abcdef1234567890abcdef12345678"
-    ]
-  },
-  {
-    "title": "TEST 2",
-    "isOnDevnet": true,
-    "website": "HTTPS://TEST2.COM",
-    "description": "TEST",
-    "notes": "TEST",
-    "contact": "@TEST",
-    "relatedContractAddresses": [
-      "0x454535445345"
-    ]
   }
 ]
