@@ -919,6 +919,9 @@
         // Add this at the top of your script section
         let globalProjects = [];
 
+        // Add a global variable to track sort direction
+        let currentSortDirection = 'asc';
+
         // Modify the first DOMContentLoaded listener to store projects globally
         document.addEventListener('DOMContentLoaded', async () => {
             try {
@@ -1023,23 +1026,14 @@
                     const newProjectFilter = document.getElementById('projectFilter');
                     
                     // Add new listeners
-                    newSearchInput.addEventListener('input', () => filterProjects());
-                    newProjectFilter.addEventListener('change', () => filterProjects());
+                    newSearchInput.addEventListener('input', filterAndSortProjects);
+                    newProjectFilter.addEventListener('change', filterAndSortProjects);
 
                     if (sortButton) {
                         sortButton.addEventListener('click', () => {
-                            const isAscending = sortButton.textContent === '↑';
-                            sortButton.textContent = isAscending ? '↓' : '↑';
-                            
-                            const sortedProjects = [...projects].sort((a, b) => {
-                                const titleA = a.title.toLowerCase();
-                                const titleB = b.title.toLowerCase();
-                                return isAscending 
-                                    ? titleB.localeCompare(titleA) 
-                                    : titleA.localeCompare(titleB);
-                            });
-                            
-                            renderProjects(sortedProjects);
+                            currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+                            sortButton.textContent = currentSortDirection === 'asc' ? '↑' : '↓';
+                            filterAndSortProjects();
                         });
                     }
                 }
@@ -1127,16 +1121,13 @@
             });
         }
 
-        function filterProjects(projects = globalProjects) {
+        // Combined filter and sort function
+        function filterAndSortProjects() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const filterValue = document.getElementById('projectFilter').value;
             
-            // Get all project cards
-            const projectsGrid = document.getElementById('projectsGrid');
-            projectsGrid.innerHTML = '';
-            
-            // Filter projects based on search and filter criteria
-            const filteredProjects = projects.filter(project => {
+            // First, filter the projects
+            const filteredProjects = globalProjects.filter(project => {
                 const titleMatch = project.title.toLowerCase().includes(searchTerm);
                 const descriptionMatch = project.description?.toLowerCase().includes(searchTerm);
                 
@@ -1148,8 +1139,17 @@
                 return (titleMatch || descriptionMatch) && filterMatch;
             });
             
-            // Render filtered projects
-            renderProjects(filteredProjects);
+            // Then, sort the filtered projects
+            const sortedProjects = [...filteredProjects].sort((a, b) => {
+                const titleA = a.title.toLowerCase();
+                const titleB = b.title.toLowerCase();
+                return currentSortDirection === 'asc'
+                    ? titleA.localeCompare(titleB)
+                    : titleB.localeCompare(titleA);
+            });
+            
+            // Finally, render the filtered and sorted projects
+            renderProjects(sortedProjects);
         }
 
         function copyToClipboard(text) {
