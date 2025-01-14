@@ -561,5 +561,16 @@
     "relatedContractAddresses": [
       "0x1234567890abcdef1234567890abcdef12345678"
     ]
+  },
+  {
+    "title": "TEST 2",
+    "isOnDevnet": true,
+    "website": "HTTPS://TEST2.COM",
+    "description": "TEST",
+    "notes": "TEST",
+    "contact": "@TEST",
+    "relatedContractAddresses": [
+      "0x454535445345"
+    ]
   }
 ]
