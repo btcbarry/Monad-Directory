@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monad Directory</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             background-color: #111;
@@ -103,148 +102,89 @@
             background-color: #333;
         }
 
-        .search-section {
-            position: relative;
+        /* Form styles - only add after exact copy of index.html styles */
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto 0;
             background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
             border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 40px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            text-align: left;
         }
 
-        .search-input {
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 8px 12px;
+            padding: 12px;
             background: #000;
             border: 1px solid #333;
             border-radius: 5px;
             color: white;
             font-size: 14px;
-            height: 38px;
             box-sizing: border-box;
-            margin-bottom: 12px;
         }
 
-        .filter-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
         }
 
-        select {
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 5px;
-            color: white;
-            font-size: 14px;
-            height: 38px;
-            padding: 0 16px;
-            cursor: pointer;
-        }
-
-        .sort-button {
-            background: transparent;
-            border: none;
-            color: white;
-            width: 38px;
-            height: 38px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .sort-button:hover {
-            color: #e040fb;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 24px;
-            transition: transform 0.2s ease;
-            position: relative;
-            height: 340px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .project-card:hover {
-            transform: translateY(-2px);
-            border-color: #444;
-        }
-
-        .project-title {
-            font-size: 24px;
-            margin: 0;
-            color: #e040fb;
-        }
-
-        .project-description {
+        .note {
             color: #888;
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 0;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
+            font-size: 13px;
+            margin-top: 6px;
         }
 
-        .website-link {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            padding: 8px 16px;
+        .submit-button {
             background: #e040fb;
+            color: white;
+            padding: 12px 24px;
+            border: none;
             border-radius: 5px;
-            transition: opacity 0.2s ease;
-            display: inline-block;
-            margin-top: auto;
-            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.2s ease;
         }
 
-        .website-link:hover {
-            opacity: 0.8;
+        .submit-button:hover {
+            background: #d040e9;
         }
 
-        .status-on-devnet,
-        .status-not-on-devnet {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
+        /* Add these styles for alerts */
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
 
-        .status-on-devnet {
-            background: rgba(0, 255, 0, 0.1);
-            color: #00ff00;
+        .success {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
         }
 
-        .status-not-on-devnet {
-            background: rgba(255, 255, 0, 0.1);
-            color: #ffff00;
-        }
-
-        .timestamp-container {
-            color: #666;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 8px;
+        .error {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
         }
     </style>
 </head>
@@ -254,166 +194,65 @@
         <p class="subtitle">A comprehensive directory of current projects deployed on Monad Devnet.</p>
         
         <nav>
-            <a href="/">Home</a>
-            <a href="/submit">Submit a Project for Listing</a>
+            <a href="index.html">Home</a>
+            <a href="submit.html">Submit a Project for Listing</a>
         </nav>
 
-        <div class="search-section">
-            <input type="text" class="search-input" placeholder="Search projects..." id="searchInput">
-            <div class="filter-controls">
-                <select id="projectFilter">
-                    <option value="all">All Projects</option>
-                    <option value="onDevnet">On Devnet</option>
-                    <option value="notOnDevnet">Not Yet on Devnet</option>
-                </select>
-                <button class="sort-button">↑</button>
-            </div>
-            <div class="timestamp-container">Last updated:&nbsp;<span id="updateTimestamp">...</span></div>
-        </div>
-        
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Projects will be dynamically inserted here -->
+        <!-- Form content starts here -->
+        <div class="form-container">
+            <form id="submitForm">
+                <div class="form-group">
+                    <label for="title">Project Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="website">Website URL</label>
+                    <input type="url" id="website" name="website" required>
+                    <div class="note">Please include https:// in the URL</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Additional Notes</label>
+                    <textarea id="notes" name="notes"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Contact Information</label>
+                    <input type="text" id="contact" name="contact" required>
+                    <div class="note">Discord username or other contact method</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="text" id="email" name="email" required>
+                    <div class="note">For communication about your submission</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contractAddresses">Contract Addresses</label>
+                    <textarea id="contractAddresses" name="contractAddresses" placeholder="One address per line"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="devnetStatus">Devnet Status</label>
+                    <select id="devnetStatus" name="devnetStatus" required>
+                        <option value="">Select status</option>
+                        <option value="true">On Devnet</option>
+                        <option value="false">Not on Devnet</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Project</button>
+            </form>
         </div>
     </div>
 
-    <script>
-        let globalProjects = [];
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const projectsGrid = document.getElementById('projectsGrid');
-                projectsGrid.innerHTML = `
-                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                        <p style="color: #e040fb;">Loading projects...</p>
-                    </div>
-                `;
-
-                const response = await fetch('/projects.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const projects = await response.json();
-                globalProjects = projects;
-
-                // Sort projects alphabetically by default
-                projects.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
-
-                // Setup event listeners
-                const searchInput = document.getElementById('searchInput');
-                const projectFilter = document.getElementById('projectFilter');
-                const sortButton = document.querySelector('.sort-button');
-
-                searchInput.addEventListener('input', () => filterProjects());
-                projectFilter.addEventListener('change', () => filterProjects());
-                
-                if (sortButton) {
-                    sortButton.addEventListener('click', () => {
-                        const isAscending = sortButton.textContent === '↑';
-                        sortButton.textContent = isAscending ? '↓' : '↑';
-                        
-                        const sortedProjects = [...projects].sort((a, b) => {
-                            const titleA = a.title.toLowerCase();
-                            const titleB = b.title.toLowerCase();
-                            return isAscending 
-                                ? titleB.localeCompare(titleA) 
-                                : titleA.localeCompare(titleB);
-                        });
-                        
-                        renderProjects(sortedProjects);
-                    });
-                }
-
-                renderProjects(projects);
-
-            } catch (error) {
-                console.error('Error:', error);
-                projectsGrid.innerHTML = `
-                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                        <p style="color: #f44336;">Error loading projects: ${error.message}</p>
-                        <button onclick="location.reload()" style="
-                            background: #e040fb;
-                            border: none;
-                            color: white;
-                            padding: 8px 16px;
-                            border-radius: 4px;
-                            margin-top: 16px;
-                            cursor: pointer;
-                        ">Try Again</button>
-                    </div>
-                `;
-            }
-        });
-
-        function renderProjects(projects) {
-            const projectsGrid = document.getElementById('projectsGrid');
-            projectsGrid.innerHTML = '';
-            
-            projects.forEach(project => {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                
-                const statusClass = project.isOnDevnet ? 'status-on-devnet' : 'status-not-on-devnet';
-                const statusText = project.isOnDevnet ? 'On Devnet' : 'Not Yet on Devnet';
-                
-                card.innerHTML = `
-                    <h2 class="project-title">${project.title}</h2>
-                    <p class="project-description">${project.description || ''}</p>
-                    <a href="${project.website}" target="_blank" rel="noopener noreferrer" class="website-link">Website</a>
-                    <div class="${statusClass}">${statusText}</div>
-                `;
-                
-                projectsGrid.appendChild(card);
-            });
-        }
-
-        function filterProjects(projects = globalProjects) {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filterValue = document.getElementById('projectFilter').value;
-            
-            const filteredProjects = projects.filter(project => {
-                const titleMatch = project.title.toLowerCase().includes(searchTerm);
-                const descriptionMatch = project.description?.toLowerCase().includes(searchTerm);
-                
-                const filterMatch = 
-                    filterValue === 'all' || 
-                    (filterValue === 'onDevnet' && project.isOnDevnet) ||
-                    (filterValue === 'notOnDevnet' && !project.isOnDevnet);
-                
-                return (titleMatch || descriptionMatch) && filterMatch;
-            });
-            
-            renderProjects(filteredProjects);
-        }
-
-        // Update last modified date function
-        async function updateLastModifiedDate() {
-            try {
-                const response = await fetch('/projects.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const lastModified = response.headers.get('last-modified');
-                if (lastModified) {
-                    const date = new Date(lastModified);
-                    const formattedDate = date.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    });
-                    document.getElementById('updateTimestamp').textContent = formattedDate;
-                } else {
-                    document.getElementById('updateTimestamp').textContent = 'Unknown';
-                }
-            } catch (error) {
-                console.error('Error fetching last update date:', error);
-                document.getElementById('updateTimestamp').textContent = 'Unknown';
-            }
-        }
-
-        // Call updateLastModifiedDate when page loads
-        updateLastModifiedDate();
-    </script>
+    <script src="submit.js"></script>
 </body>
 </html>
