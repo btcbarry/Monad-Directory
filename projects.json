@@ -550,5 +550,16 @@
     "notes": "#RICKY-SHA0",
     "contact": "rickyshao",
     "relatedContractAddresses": []
+  },
+  {
+    "title": "TEST",
+    "isOnDevnet": false,
+    "website": "HTTPS://TESTING.COM",
+    "description": "TEST",
+    "notes": "TEST",
+    "contact": "@TEST",
+    "relatedContractAddresses": [
+      "0x45363546536"
+    ]
   }
 ]
