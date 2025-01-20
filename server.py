@@ -15,6 +15,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Add a test endpoint
+@app.get("/")
+async def root():
+    return {"status": "ok", "message": "Monad Chat Backend is running"}
+
 # Initialize Monad Assistant
 assistant = MonadAssistant()
 
