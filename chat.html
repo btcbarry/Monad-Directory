@@ -88,15 +88,37 @@
 
         /* Chat specific styles */
         .chat-container {
-            width: 500px;
+            width: 800px;
             margin: 40px auto;
             background: #13111C;
             border: 1px solid #2D2B3B;
-            border-radius: 16px;
+            border-radius: 24px;
             height: 800px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        /* Add a subtle gradient border effect */
+        .chat-container::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, #00e5ff, #c012e9);
+            border-radius: 24px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Optional: Add a hover effect */
+        .chat-container:hover::before {
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
         }
 
         .chat-messages {
@@ -105,80 +127,116 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
         }
 
         .message {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            line-height: 1.4;
-            font-size: 14px;
+            max-width: 400px;
+            padding: 16px 20px;
+            border-radius: 18px;
+            line-height: 1.5;
+            font-size: 15px;
+            word-wrap: break-word;
+            margin-bottom: 16px;
+            transition: transform 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .message.bot {
-            background: #2D2B3B;
+            background: linear-gradient(145deg, #1E1C24, #1a1821);
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
+            border-bottom-left-radius: 6px;
             color: #ffffff;
-            border: 1px solid #3D3B4B;
+            border: 1px solid rgba(45, 43, 59, 0.6);
+            max-width: 85%;
+            margin-right: 10%;
         }
 
         .message.user {
-            background: #6E56CF;
+            background: linear-gradient(145deg, #7460d1, #6C5DD3);
             align-self: flex-end;
-            border-bottom-right-radius: 4px;
+            border-bottom-right-radius: 6px;
             color: white;
+            max-width: 70%;
+            margin-left: 10%;
+            box-shadow: 0 4px 12px rgba(108, 93, 211, 0.2);
         }
 
         .chat-input-container {
-            padding: 16px;
-            background: #1A1825;
+            padding: 24px;
+            background: linear-gradient(180deg, #1A1825, #171622);
             border-top: 1px solid #2D2B3B;
             display: flex;
-            gap: 12px;
+            gap: 16px;
+            align-items: center;
         }
 
         .chat-input {
             flex: 1;
-            background: #13111C;
+            background: rgba(19, 17, 28, 0.8);
             border: 1px solid #2D2B3B;
-            border-radius: 8px;
+            border-radius: 16px;
             color: white;
-            padding: 12px;
-            font-size: 14px;
+            padding: 16px 20px;
+            font-size: 15px;
             resize: none;
             min-height: 24px;
             max-height: 120px;
+            line-height: 1.5;
+            backdrop-filter: blur(8px);
+            transition: border-color 0.2s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #6C5DD3;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(108, 93, 211, 0.2);
         }
 
         .send-button {
-            background: #6E56CF;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
+            min-height: 52px;
+            width: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 10px;
+            border-radius: 16px;
+            background: linear-gradient(145deg, #7460d1, #6C5DD3);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(108, 93, 211, 0.2);
+        }
+
+        .send-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(108, 93, 211, 0.3);
+        }
+
+        .send-button:active {
+            transform: translateY(1px);
+        }
+
+        .send-button img {
+            width: 24px;  /* Set specific size for the icon */
+            height: 24px;
+            object-fit: contain;
         }
 
         .typing-indicator {
             display: none;
-            margin: 0 20px;
-            padding: 8px 12px;
-            background: #1A1825;
-            border-radius: 8px;
+            margin: 8px 20px;
+            padding: 12px 16px;
+            background: linear-gradient(145deg, #1E1C24, #1a1821);
+            border-radius: 12px;
             color: #888;
-            font-size: 13px;
+            font-size: 14px;
+            animation: fadeIn 0.3s ease;
         }
 
         /* Add responsive adjustments */
-        @media (max-width: 550px) {
+        @media (max-width: 850px) {
             .chat-container {
-                width: 90%;
+                width: 95%;
                 margin: 20px auto;
             }
         }
@@ -230,24 +288,246 @@
                 opacity: 0.85;
             }
         }
+
+        /* Add these new styles */
+        .suggestion-message {
+            background: transparent !important;
+            border: none !important;
+            padding: 8px 0 !important;
+        }
+
+        .chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .suggestion-btn {
+            background: #2D2B3B;
+            border: 1px solid #444;
+            border-radius: 20px;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .suggestion-btn:hover {
+            background: #3D3B4B;
+            border-color: #666;
+            transform: translateY(-1px);
+        }
+
+        /* Update existing message styles */
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.error {
+            background: #2D2B3B;
+            border: 1px solid #ff4444;
+        }
+
+        .retry-btn {
+            background: #6E56CF;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            padding: 4px 8px;
+            margin-top: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .retry-btn:hover {
+            background: #5842b5;
+        }
+
+        .dot {
+            opacity: 0.2;
+            transition: opacity 0.3s ease;
+        }
+
+        .clear-history-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #2D2B3B;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: white;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .clear-history-btn:hover {
+            background: #3D3B4B;
+            border-color: #666;
+        }
+
+        /* Add these new styles */
+        .search-bar {
+            padding: 10px;
+            background: #1A1825;
+            border-bottom: 1px solid #2D2B3B;
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            background: #13111C;
+            border: 1px solid #2D2B3B;
+            border-radius: 4px;
+            color: white;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .search-btn {
+            background: #2D2B3B;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            width: 32px;
+            cursor: pointer;
+        }
+
+        .message-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .message:hover .message-controls {
+            opacity: 1;
+            height: auto;
+            margin-top: 4px;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            color: white;
+        }
+
+        .reactions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .reaction-btn {
+            background: none;
+            border: 1px solid #2D2B3B;
+            border-radius: 12px;
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reaction-btn:hover, .reaction-btn.active {
+            background: #2D2B3B;
+            border-color: #3D3B4B;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #2D2B3B;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        pre code {
+            display: block;
+            background: #13111C;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        code {
+            background: #13111C;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .message a {
+            color: #6E56CF;
+            text-decoration: none;
+        }
+
+        .message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Remove all reaction-related styles */
+        .reactions, 
+        .suggestion-message,
+        .chat-suggestions {
+            display: none;
+        }
+
+        /* Update message content to remove extra space */
+        .message-content {
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Monad Directory<span class="beta">beta</span></h1>
-        <p class="subtitle">A comprehensive directory of current projects deployed on Monad Devnet.</p>
+        <h1>Ask AI Nad<span class="beta">beta</span></h1>
+        <div class="subtitle" style="margin-top: 20px;">A comprehensive AI assistant to learn all about Monad</div>
         
         <nav>
             <a href="./index.html">Home</a>
             <a href="./calendar.html">Community Calendar<span class="new-badge">NEW</span></a>
-            <a href="./chat.html">Ask A Nad<span class="new-badge">NEW</span></a>
+            <a href="./chat.html">Ask AI Nad<span class="new-badge">NEW</span></a>
         </nav>
 
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
-                <!-- Messages will be added here -->
                 <div class="message bot">
-                    Hello! I'm the Monad AI assistant. How can I help you learn about Monad blockchain?
+                    Hi! I'm here to help you learn about Monad. What would you like to know?
                 </div>
             </div>
 
@@ -263,18 +543,20 @@
                     rows="1"
                 ></textarea>
                 <button id="sendButton" class="send-button">
-                    <i class="fas fa-paper-plane"></i>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Chat functionality
         document.addEventListener('DOMContentLoaded', () => {
             const chatMessages = document.getElementById('chatMessages');
             const chatInput = document.getElementById('chatInput');
-            const sendButton = document.getElementById('sendButton');
+            const sendButton = document.querySelector('.send-button');
             const typingIndicator = document.getElementById('typingIndicator');
 
             const API_URL = 'https://monad-chat-backend.onrender.com/chat';
