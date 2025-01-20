@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monad Directory</title>
+    <style>
+        /* Base styles - exact match with other pages */
+        body {
+            background-color: #111;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Header styles - exact match */
+        h1 {
+            background: linear-gradient(
+                to right,
+                #00e5ff 0%,
+                #c012e9 50%,
+                #00e5ff 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 56px;
+            margin: 0 auto 5px auto;
+            animation: shine 2s linear infinite;
+            background-size: 200% auto;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: -200% center;
+            }
+        }
+
+        .beta {
+            font-size: 11px;
+            position: relative;
+            top: 15px;
+            left: -4px;
+            display: inline-block;
+            color: white;
+            -webkit-text-fill-color: white;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        /* Navigation - exact match */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            padding: 25px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 8px 16px;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #e040fb;
+        }
+
+        /* Enhanced Calendar Styles */
+        .calendar-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 0;
+            margin-top: 20px;
+            min-height: 800px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        .calendar-iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 800px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            .calendar-container {
+                min-height: 600px;
+            }
+            
+            .calendar-iframe {
+                min-height: 600px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .calendar-container {
+                min-height: 500px;
+            }
+            
+            .calendar-iframe {
+                min-height: 500px;
+            }
+        }
+
+        /* Add these scrollbar styles to your existing CSS */
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            margin-right: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #13111C;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            border: 2px solid #13111C;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffffff;
+        }
+
+        .new-badge {
+            background: linear-gradient(90deg, #00e5ff, #c012e9);
+            color: white;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-left: 4px;
+            font-weight: 500;
+            display: inline-block;
+            vertical-align: text-top;
+            animation: subtle-pulse 3s infinite;
+            opacity: 0.85;
+        }
+
+        @keyframes subtle-pulse {
+            0% {
+                opacity: 0.85;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0.85;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Monad Directory<span class="beta">beta</span></h1>
+        <p class="subtitle">A comprehensive directory of current projects deployed on Monad.</p>
+        
+        <nav>
+            <a href="./index.html">Home</a>
+            <a href="./calendar.html">Community Calendar<span class="new-badge">NEW</span></a>
+            <a href="./chat.html">Ask AI Nad<span class="new-badge">NEW</span></a>
+        </nav>
+
+        <div class="calendar-container">
+            <iframe 
+                src="https://portdeveloper.github.io/monadcommunitycalendar/"
+                class="calendar-iframe"
+                title="Monad Community Calendar"
+                scrolling="no"
+                frameborder="0"
+            ></iframe>
+        </div>
+    </div>
+</body>
+</html> 
