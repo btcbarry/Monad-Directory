@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import logging
-from scripts.monad_gpt import MonadAssistant
+from monad_gpt import MonadAssistant
 
 # Setup logging
 logging.basicConfig(
