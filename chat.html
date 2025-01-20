@@ -589,7 +589,7 @@
             const sendButton = document.querySelector('.send-button');
             const typingIndicator = document.getElementById('typingIndicator');
 
-            const API_URL = 'https://monad-directory.onrender.com/chat';
+            const API_URL = 'https://monad-chat-backend.onrender.com/chat';
 
             let isLoading = false;
 
@@ -616,7 +616,10 @@
                 const userInput = chatInput.value;
                 if (!userInput.trim()) return;
 
-                sendButton.classList.add('loading');  // Add loading state
+                // Display user message immediately
+                displayMessage(userInput, 'user');
+
+                sendButton.classList.add('loading');
                 typingIndicator.style.display = 'block';
                 sendButton.disabled = true;
 
@@ -625,6 +628,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         },
                         mode: 'cors',
                         body: JSON.stringify({ question: userInput })
@@ -641,7 +645,7 @@
                     console.error('Error:', error);
                     displayMessage(`Error: ${error.message}`, 'assistant');
                 } finally {
-                    sendButton.classList.remove('loading');  // Remove loading state
+                    sendButton.classList.remove('loading');
                     typingIndicator.style.display = 'none';
                     sendButton.disabled = false;
                     chatInput.value = '';

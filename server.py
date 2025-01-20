@@ -5,51 +5,27 @@ from pydantic import BaseModel
 import logging
 from monad_gpt import MonadAssistant
 
-# Setup detailed logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+# Setup logging
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Log all requests middleware
-@app.middleware("http")
-async def log_requests(request: Request, call_next):
-    logger.debug(f"Incoming request: {request.method} {request.url}")
-    logger.debug(f"Headers: {request.headers}")
-    response = await call_next(request)
-    logger.debug(f"Response status: {response.status_code}")
-    logger.debug(f"Response headers: {response.headers}")
-    return response
+# Add CORS middleware with more permissive settings
+origins = [
+    "https://www.monaddirectory.xyz",
+    "https://monaddirectory.xyz",
+    "http://localhost:3000",
+    "http://localhost:5000",
+]
 
-# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://www.monaddirectory.xyz"],
-    allow_credentials=False,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
-    expose_headers=["*"],
+    allow_origins=origins,
+    allow_credentials=False,  # Changed to False since we're not using credentials
+    allow_methods=["GET", "POST", "OPTIONS"],  # Explicitly list methods
+    allow_headers=["Content-Type", "Accept"],  # Explicitly list headers
 )
-
-# Explicit OPTIONS handler
-@app.options("/chat")
-async def options_handler():
-    return JSONResponse(
-        content={"status": "ok"},
-        headers={
-            "Access-Control-Allow-Origin": "https://www.monaddirectory.xyz",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-        }
-    )
-
-# Test endpoint
-@app.get("/")
-async def root():
-    return {"status": "ok", "message": "Monad Chat Backend is running"}
 
 # Initialize Monad Assistant
 try:
@@ -62,15 +38,23 @@ except Exception as e:
 class ChatRequest(BaseModel):
     question: str
 
+@app.get("/")
+async def root():
+    logger.debug("Root endpoint called")
+    return {"status": "ok", "message": "Monad Chat Backend is running"}
+
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
     try:
         logger.info(f"Received question: {request.question}")
         response = assistant.ask(request.question)
         logger.info("Successfully generated response")
-        return {
-            "message": response
-        }
+        return JSONResponse(
+            content={"message": response},
+            headers={
+                "Access-Control-Allow-Origin": "https://www.monaddirectory.xyz"
+            }
+        )
     except Exception as e:
         logger.error(f"Error in chat endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
