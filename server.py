@@ -24,13 +24,13 @@ async def root():
 assistant = MonadAssistant()
 
 class ChatRequest(BaseModel):
-    message: str
+    question: str  # Changed from message to question
 
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
     try:
-        response = assistant.ask(request.message)
-        return {"message": response}
+        response = assistant.ask(request.question)  # Changed from message to question
+        return {"message": response}  # Keep this as message for frontend compatibility
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
