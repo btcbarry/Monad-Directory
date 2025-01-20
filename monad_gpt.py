@@ -1,4 +1,4 @@
-from openai import OpenAI
+import openai
 import os
 from dotenv import load_dotenv
 import logging
@@ -32,12 +32,7 @@ class MonadAssistant:
             if not api_key:
                 raise ValueError("Missing OPENAI_API_KEY")
             
-            self.client = OpenAI(
-                api_key=api_key,
-                max_retries=3,
-                timeout=30,
-                default_headers={"User-Agent": "MonadAssistant/1.0"}
-            )
+            openai.api_key = api_key
             self.model = "gpt-3.5-turbo"
             self.max_tokens = 2000
             self.logger.info("OpenAI client initialized successfully")
@@ -97,17 +92,15 @@ class MonadAssistant:
     def ask(self, question: str) -> str:
         """Process question and generate response"""
         try:
-            # Detect question type
             question_type = self.detect_question_type(question)
             
-            # Build prompt
             prompt = f"""Question Type: {question_type}
             Question: {question}
 
             Please provide a helpful and informative response.
             """
 
-            response = self.client.chat.completions.create(
+            response = openai.ChatCompletion.create(
                 model=self.model,
                 messages=[
                     {"role": "system", "content": self.context},
