@@ -11,13 +11,14 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Add CORS middleware
+# Add CORS middleware BEFORE any routes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://www.monaddirectory.xyz", "https://monaddirectory.xyz"],
+    allow_origins=["*"],  # Temporarily allow all origins for testing
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Add request logging middleware
@@ -51,14 +52,9 @@ async def chat_endpoint(request: ChatRequest):
         logger.info(f"Received question: {request.question}")
         response = assistant.ask(request.question)
         logger.info("Successfully generated response")
-        return JSONResponse(
-            content={"message": response},
-            headers={
-                "Access-Control-Allow-Origin": "https://www.monaddirectory.xyz",
-                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type",
-            }
-        )
+        return {
+            "message": response
+        }
     except Exception as e:
         logger.error(f"Error in chat endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
