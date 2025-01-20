@@ -27,17 +27,19 @@ class MonadAssistant:
 
     def setup_openai(self):
         """Setup OpenAI client"""
+        # Try to get key from environment variables
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
-            raise ValueError("Missing OPENAI_API_KEY in environment variables")
+            self.logger.error("OpenAI API key not found in environment variables")
+            raise ValueError("Missing OPENAI_API_KEY. Please set it in environment variables")
         
         try:
-            # Basic initialization without any additional settings
-            self.client = OpenAI()
-            # Test the client
-            self.client.models.list()
+            self.client = OpenAI(api_key=api_key)
             self.model = "gpt-3.5-turbo"
             self.max_tokens = 2000
+            # Test the connection
+            self.client.models.list()
+            self.logger.info("OpenAI client initialized successfully")
         except Exception as e:
             self.logger.error(f"OpenAI client initialization error: {str(e)}")
             raise
