@@ -5,30 +5,46 @@ from pydantic import BaseModel
 import logging
 from monad_gpt import MonadAssistant
 
-# Setup logging
-logging.basicConfig(level=logging.DEBUG)
+# Setup detailed logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Add CORS middleware BEFORE any routes
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Temporarily allow all origins for testing
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"],
-)
-
-# Add request logging middleware
+# Log all requests middleware
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     logger.debug(f"Incoming request: {request.method} {request.url}")
     logger.debug(f"Headers: {request.headers}")
     response = await call_next(request)
     logger.debug(f"Response status: {response.status_code}")
+    logger.debug(f"Response headers: {response.headers}")
     return response
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://www.monaddirectory.xyz"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+)
+
+# Explicit OPTIONS handler
+@app.options("/chat")
+async def options_handler():
+    return JSONResponse(
+        content={"status": "ok"},
+        headers={
+            "Access-Control-Allow-Origin": "https://www.monaddirectory.xyz",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+        }
+    )
 
 # Test endpoint
 @app.get("/")
