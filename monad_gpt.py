@@ -5,12 +5,14 @@ import logging
 from typing import Dict, List, Optional
 import re
 from collections import defaultdict
+import json
 
 class MonadAssistant:
     def __init__(self):
         load_dotenv()
         self.setup_logging()
         self.setup_openai()
+        self.load_docs()
         self.setup_context()
 
     def setup_logging(self):
@@ -38,6 +40,33 @@ class MonadAssistant:
             self.logger.info("OpenAI client initialized successfully")
         except Exception as e:
             self.logger.error(f"OpenAI client initialization error: {str(e)}")
+            raise
+
+    def load_docs(self):
+        """Load the scraped Monad documentation"""
+        try:
+            # Try multiple paths for both local and Render environments
+            possible_paths = [
+                os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'monad_docs.json'),
+                os.path.join(os.getcwd(), 'monad_docs.json'),
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), 'monad_docs.json')
+            ]
+            
+            docs_path = None
+            for path in possible_paths:
+                if os.path.exists(path):
+                    docs_path = path
+                    break
+            
+            if not docs_path:
+                raise FileNotFoundError("Could not find monad_docs.json in any expected location")
+            
+            with open(docs_path, 'r', encoding='utf-8') as f:
+                self.docs = json.load(f)
+                self.logger.info(f"Documentation loaded successfully from {docs_path}")
+                
+        except Exception as e:
+            self.logger.error(f"Error loading documentation: {str(e)}")
             raise
 
     def setup_context(self):
@@ -89,15 +118,68 @@ class MonadAssistant:
         else:
             return "general"
 
+    def find_relevant_docs(self, question: str) -> str:
+        """Find relevant documentation for the question"""
+        self.logger.info(f"Searching documentation for: {question}")
+        
+        keywords = question.lower().split()
+        scored_content = []
+        
+        for section, pages in self.docs.items():
+            for title, content in pages.items():
+                score = 0
+                content_lower = content['content'].lower()
+                
+                matches = []
+                for word in keywords:
+                    if word in content_lower:
+                        score += 1
+                        matches.append(word)
+                    if word in title.lower():
+                        score += 2
+                        matches.append(f"{word}(title)")
+                
+                if matches:
+                    self.logger.debug(f"Found matches in '{title}': {matches}")
+                    scored_content.append({
+                        'title': title,
+                        'content': content['content'],
+                        'score': score,
+                        'matches': matches
+                    })
+        
+        scored_content.sort(key=lambda x: x['score'], reverse=True)
+        top_content = scored_content[:3]
+        
+        relevant_content = [
+            f"\nFrom {item['title']}:\n{item['content'].strip()}"
+            for item in top_content
+        ]
+        
+        return "\n".join(relevant_content) if relevant_content else "No specific documentation found."
+
     def ask(self, question: str) -> str:
         """Process question and generate response"""
         try:
             question_type = self.detect_question_type(question)
+            relevant_docs = self.find_relevant_docs(question)
             
             prompt = f"""Question Type: {question_type}
+            
+            Relevant Monad Documentation:
+            {relevant_docs}
+            
             Question: {question}
 
-            Please provide a helpful and informative response.
+            Instructions:
+            1. Use ONLY the provided Monad documentation above to answer the question
+            2. If the documentation doesn't contain the specific information, say so
+            3. Format the response with:
+               - Bold text for important terms using **term**
+               - Code blocks with ```language
+               - Bullet points where appropriate
+            4. Include specific technical details and numbers from the docs
+            5. Structure the response with clear paragraphs
             """
 
             response = openai.ChatCompletion.create(
@@ -106,8 +188,7 @@ class MonadAssistant:
                     {"role": "system", "content": self.context},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.7,
-                max_tokens=self.max_tokens
+                temperature=0.3,
             )
             
             return response.choices[0].message.content
