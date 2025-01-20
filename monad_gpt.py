@@ -28,8 +28,16 @@ class MonadAssistant:
     def setup_openai(self):
         """Setup OpenAI client"""
         try:
-            # Initialize without any parameters - it will use OPENAI_API_KEY from environment
-            self.client = OpenAI()
+            api_key = os.getenv("OPENAI_API_KEY")
+            if not api_key:
+                raise ValueError("Missing OPENAI_API_KEY")
+            
+            self.client = OpenAI(
+                api_key=api_key,
+                max_retries=3,
+                timeout=30,
+                default_headers={"User-Agent": "MonadAssistant/1.0"}
+            )
             self.model = "gpt-3.5-turbo"
             self.max_tokens = 2000
             self.logger.info("OpenAI client initialized successfully")
