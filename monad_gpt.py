@@ -31,10 +31,16 @@ class MonadAssistant:
         if not api_key:
             raise ValueError("Missing OPENAI_API_KEY in environment variables")
         
-        # Initialize OpenAI client without proxy settings
-        self.client = OpenAI(api_key=api_key)
-        self.model = "gpt-3.5-turbo"
-        self.max_tokens = 2000
+        try:
+            # Basic initialization without any additional settings
+            self.client = OpenAI()
+            # Test the client
+            self.client.models.list()
+            self.model = "gpt-3.5-turbo"
+            self.max_tokens = 2000
+        except Exception as e:
+            self.logger.error(f"OpenAI client initialization error: {str(e)}")
+            raise
 
     def setup_context(self):
         """Setup context for the assistant"""
