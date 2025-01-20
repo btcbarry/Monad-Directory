@@ -149,6 +149,31 @@
             border: 1px solid rgba(45, 43, 59, 0.6);
             max-width: 85%;
             margin-right: 10%;
+            white-space: pre-line;
+        }
+
+        .message.bot p {
+            margin: 0 0 10px 0;
+        }
+
+        .message.bot strong {
+            color: #6C5DD3;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .list-item {
+            padding-left: 20px;
+        }
+
+        .message.bot ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .message.bot li {
+            margin-bottom: 5px;
         }
 
         .message.user {
@@ -220,6 +245,11 @@
             width: 24px;  /* Set specific size for the icon */
             height: 24px;
             object-fit: contain;
+        }
+
+        .send-button.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         .typing-indicator {
@@ -559,7 +589,9 @@
             const sendButton = document.querySelector('.send-button');
             const typingIndicator = document.getElementById('typingIndicator');
 
-            const API_URL = 'https://monad-chat-backend.onrender.com/chat';
+            const API_URL = 'https://monad-directory.onrender.com/chat';
+
+            let isLoading = false;
 
             // Auto-resize textarea
             chatInput.addEventListener('input', () => {
@@ -579,56 +611,103 @@
             sendButton.addEventListener('click', sendMessage);
 
             async function sendMessage() {
-                const message = chatInput.value.trim();
-                if (!message) return;
+                if (isLoading) return;
+                
+                const userInput = chatInput.value;
+                if (!userInput.trim()) return;
 
-                // Add user message
-                addMessage(message, 'user');
-
-                // Clear input and reset height
-                chatInput.value = '';
-                chatInput.style.height = 'auto';
-
-                // Show typing indicator
+                sendButton.classList.add('loading');  // Add loading state
                 typingIndicator.style.display = 'block';
+                sendButton.disabled = true;
 
                 try {
-                    // Send message to backend
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ message: message })
+                        body: JSON.stringify({ question: userInput })
                     });
-
+                    
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        const errorData = await response.json();
+                        throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
                     }
-
+                    
                     const data = await response.json();
-                    
-                    // Hide typing indicator
-                    typingIndicator.style.display = 'none';
-                    
-                    // Add bot response
-                    addMessage(data.message, 'bot');
-
+                    displayMessage(data.message, 'assistant');
                 } catch (error) {
                     console.error('Error:', error);
+                    displayMessage(`Error: ${error.message}`, 'assistant');
+                } finally {
+                    sendButton.classList.remove('loading');  // Remove loading state
                     typingIndicator.style.display = 'none';
-                    addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                    sendButton.disabled = false;
+                    chatInput.value = '';
+                    chatInput.style.height = 'auto';
                 }
             }
 
-            function addMessage(text, type) {
+            function displayMessage(text, type) {
                 const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${type}`;
-                messageDiv.textContent = text;
-                chatMessages.appendChild(messageDiv);
+                messageDiv.className = `message ${type === 'assistant' ? 'bot' : 'user'}`;
                 
-                // Scroll to bottom
+                if (type === 'assistant') {
+                    messageDiv.innerHTML = formatAdvancedText(text);
+                } else {
+                    messageDiv.textContent = text;
+                }
+                
+                chatMessages.appendChild(messageDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Clear input after sending
+                if (type !== 'assistant') {
+                    chatInput.value = '';
+                    chatInput.style.height = 'auto';
+                }
+            }
+
+            function formatAdvancedText(text) {
+                return text
+                    // Bold text (handle both **text** and **text**: patterns)
+                    .replace(/\*\*(.*?)\*\*:?/g, '<strong>$1</strong>')
+                    
+                    // Split numbered lists into paragraphs
+                    .replace(/(\d+\.)\s+([^\n]+)/g, '<p class="list-item">$1 $2</p>')
+                    
+                    // Add paragraph breaks between sentences that start with keywords
+                    .replace(/\.\s+(Smart Contracts:|Decentralized Applications:|Consensus Mechanism:|Token Economy:|Security and Privacy:)/g, '.</p><p><strong>$1</strong>')
+                    
+                    // Improved code block formatting with syntax highlighting
+                    .replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => 
+                        `<pre><code class="language-${lang || 'plaintext'}">${
+                            code.trim()
+                                .replace(/</g, '&lt;')
+                                .replace(/>/g, '&gt;')
+                        }</code></pre>`)
+                    
+                    // Inline code
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    
+                    // Italic text
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    
+                    // Links
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                    
+                    // Bullet points
+                    .replace(/^\s*-\s+(.+)/gm, '<li>$1</li>')
+                    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+                    
+                    // Wrap in paragraphs if not already wrapped
+                    .replace(/^(?!<[p|ul|li|pre])(.*$)/gm, '<p>$1</p>')
+                    
+                    // Clean up any empty paragraphs
+                    .replace(/<p>\s*<\/p>/g, '')
+                    
+                    // Add some spacing between sections
+                    .replace(/<\/p><p>/g, '</p><br><p>');
             }
         });
     </script>
