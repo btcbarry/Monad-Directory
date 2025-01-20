@@ -11,32 +11,14 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Updated CORS middleware with explicit settings
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://www.monaddirectory.xyz",
-        "https://monaddirectory.xyz",
-        "http://localhost:3000",
-        "http://localhost:5000"
-    ],
-    allow_methods=["GET", "POST", "OPTIONS", "HEAD"],
-    allow_headers=["Content-Type", "Authorization", "Origin"],
+    allow_origins=["https://www.monaddirectory.xyz", "https://monaddirectory.xyz"],
     allow_credentials=False,
-    max_age=3600,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
-# Add OPTIONS endpoint for CORS preflight
-@app.options("/{path:path}")
-async def options_route(request: Request):
-    return JSONResponse(
-        content="OK",
-        headers={
-            "Access-Control-Allow-Origin": "https://www.monaddirectory.xyz",
-            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization, Origin",
-        }
-    )
 
 # Add request logging middleware
 @app.middleware("http")

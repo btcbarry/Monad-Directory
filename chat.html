@@ -624,11 +624,9 @@
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Origin': 'https://www.monaddirectory.xyz'
+                            'Content-Type': 'application/json'
                         },
                         mode: 'cors',
-                        credentials: 'omit',
                         body: JSON.stringify({ question: userInput })
                     });
                     
