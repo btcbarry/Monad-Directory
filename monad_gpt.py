@@ -120,12 +120,13 @@ class MonadAssistant:
 
     def find_relevant_docs(self, question: str) -> str:
         """Find relevant documentation for the question"""
-        self.logger.info(f"Searching documentation for: {question}")
-        
+        print(f"\n=== SEARCHING FOR: {question} ===")
         keywords = question.lower().split()
-        scored_content = []
+        print(f"Keywords: {keywords}")
         
+        scored_content = []
         for section, pages in self.docs.items():
+            print(f"\nSearching in section: {section}")
             for title, content in pages.items():
                 score = 0
                 content_lower = content['content'].lower()
